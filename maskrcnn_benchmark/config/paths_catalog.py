@@ -7,6 +7,16 @@ import os
 class DatasetCatalog(object):
     DATA_DIR = "datasets"
     DATASETS = {
+        "domian_bdd100k_cocofmt_train": {
+            "img_dir": "bdd100k/train",
+            "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json",
+            'embedding_dir': '/rscratch/data/bdd100k/domain_embedding',
+        },
+        "domain_bdd100k_cocofmt_val": {
+            "img_dir": "bdd100k/val",
+            "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_val.json",
+            'embedding_dir': '/rscratch/data/bdd100k/domain_embedding',
+    },
         "bdd100k_cocofmt_train": {
             "img_dir": "bdd100k/train",
             "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json"
@@ -116,6 +126,7 @@ class DatasetCatalog(object):
 
     @staticmethod
     def get(name):
+
         if "coco" in name:
             data_dir = DatasetCatalog.DATA_DIR
             attrs = DatasetCatalog.DATASETS[name]
@@ -123,10 +134,17 @@ class DatasetCatalog(object):
                 root=os.path.join(data_dir, attrs["img_dir"]),
                 ann_file=os.path.join(data_dir, attrs["ann_file"]),
             )
-            return dict(
-                factory="COCODataset",
-                args=args,
-            )
+            if 'domain' in name:
+                args['embedding_dir'] = attrs['embedding_dir']
+                return dict(
+                    factory="DomainDataset",
+                    args=args,
+                )
+            else:
+                return dict(
+                    factory="COCODataset",
+                    args=args,
+                )
         elif "voc" in name:
             data_dir = DatasetCatalog.DATA_DIR
             attrs = DatasetCatalog.DATASETS[name]
