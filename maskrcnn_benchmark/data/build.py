@@ -168,6 +168,7 @@ def make_data_loader(cfg, is_train=True, is_distributed=False, start_iter=0):
         collator = BBoxAugCollator() if not is_train and cfg.TEST.BBOX_AUG.ENABLED else \
             BatchCollator(cfg.DATALOADER.SIZE_DIVISIBILITY)
         num_workers = cfg.DATALOADER.NUM_WORKERS
+        #print(num_workers, 'number of workers !!!!!')
         data_loader = torch.utils.data.DataLoader(
             dataset,
             num_workers=num_workers,
