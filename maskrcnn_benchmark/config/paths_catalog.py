@@ -7,7 +7,7 @@ import os
 class DatasetCatalog(object):
     DATA_DIR = "datasets"
     DATASETS = {
-        "domian_bdd100k_cocofmt_train": {
+        "domain_bdd100k_cocofmt_train": {
             "img_dir": "bdd100k/train",
             "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json",
             'embedding_dir': '/rscratch/data/bdd100k/domain_embedding',
