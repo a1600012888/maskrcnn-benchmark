@@ -41,10 +41,12 @@ def has_valid_annotation(anno):
 
 class DomainCocoDetection(torchvision.datasets.coco.CocoDetection):
     def __init__(self, ann_file, root, embedding_dir):
-        super(DomainCocoDetection, self).__init__(root, ann_file)
+        super(DomainCocoDetection, self).__init__(root, ann_file,)
         self.embedding_dir = embedding_dir
         with open(os.path.join(self.embedding_dir, 'name2domain.json'), 'r') as f:
             self.name2domain = json.load(f)
+        self.transforms = None
+
 
         #all_vecs = [a for a in os.listdir(self.embedding_dir) if a.endswith('txt')]
         #for vec_name in all_vecs:
