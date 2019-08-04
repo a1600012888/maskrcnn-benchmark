@@ -103,6 +103,7 @@ _C.MODEL.BACKBONE.FREEZE_CONV_BODY_AT = 2
 # For Domain SCC
 _C.MODEL.BACKBONE.DOMAIN_SCC = False
 _C.MODEL.BACKBONE.NUM_EXPERTS = 4
+_C.MODEL.BACKBONE.IN_NUM = 1024
 # ---------------------------------------------------------------------------- #
 # FPN options
 # ---------------------------------------------------------------------------- #

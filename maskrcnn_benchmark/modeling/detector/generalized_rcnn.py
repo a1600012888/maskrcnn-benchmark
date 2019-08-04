@@ -30,7 +30,8 @@ class GeneralizedRCNN(nn.Module):
         self.DOMAIN_SCC = cfg.MODEL.BACKBONE.DOMAIN_SCC
         if self.DOMAIN_SCC:
             from tylib.tytorch.layers.domain_scc_modifier import Conv2DScc
-            Conv2DScc(self.backbone, cfg.MODEL.BACKBONE.NUM_EXPERTS)
+            Conv2DScc(self.backbone, cfg.MODEL.BACKBONE.NUM_EXPERTS,
+                      cfg.MODEL.BACKBONE.IN_NUM)
         self.rpn = build_rpn(cfg, self.backbone.out_channels)
         self.roi_heads = build_roi_heads(cfg, self.backbone.out_channels)
 
