@@ -100,7 +100,9 @@ _C.MODEL.BACKBONE.CONV_BODY = "R-50-C4"
 # Add StopGrad at a specified stage so the bottom layers are frozen
 _C.MODEL.BACKBONE.FREEZE_CONV_BODY_AT = 2
 
-
+# For Domain SCC
+_C.MODEL.BACKBONE.DOMAIN_SCC = False
+_C.MODEL.BACKBONE.NUM_EXPERTS = 4
 # ---------------------------------------------------------------------------- #
 # FPN options
 # ---------------------------------------------------------------------------- #

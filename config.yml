@@ -206,20 +206,20 @@ MODEL:
     STRADDLE_THRESH: 0
     USE_FPN: false
   RPN_ONLY: false
-  WEIGHT: ''
+  WEIGHT: /rscratch/zhendong/tyz/maskrcnn-benchmark/results/fbnet-bdd-1x-no-pretrain/weight-50000.pth
 OUTPUT_DIR: .
 PATHS_CATALOG: /rscratch/zhendong/tyz/maskrcnn-benchmark/maskrcnn_benchmark/config/paths_catalog.py
 SOLVER:
-  BASE_LR: 0.06
+  BASE_LR: 0.12
   BIAS_LR_FACTOR: 2
   CHECKPOINT_PERIOD: 2500
   GAMMA: 0.1
-  IMS_PER_BATCH: 128
-  MAX_ITER: 90000
+  IMS_PER_BATCH: 256
+  MAX_ITER: 50000
   MOMENTUM: 0.9
   STEPS:
-  - 60000
-  - 80000
+  - 35000
+  - 45000
   WARMUP_FACTOR: 0.1
   WARMUP_ITERS: 500
   WARMUP_METHOD: linear
@@ -235,4 +235,4 @@ TEST:
   DETECTIONS_PER_IMG: 100
   EXPECTED_RESULTS: []
   EXPECTED_RESULTS_SIGMA_TOL: 4
-  IMS_PER_BATCH: 8
+  IMS_PER_BATCH: 16
