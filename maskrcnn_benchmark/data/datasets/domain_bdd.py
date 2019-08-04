@@ -8,6 +8,7 @@ from maskrcnn_benchmark.structures.keypoint import PersonKeypoints
 import os
 import json
 import numpy as np
+from PIL import Image
 
 min_keypoints_per_image = 10
 
@@ -57,13 +58,14 @@ class DomainCocoDetection(torchvision.datasets.coco.CocoDetection):
         Returns:
             tuple: Tuple (image, target). target is a list of captions for the image.
         """
+
         coco = self.coco
         img_id = self.ids[index]
         ann_ids = coco.getAnnIds(imgIds=img_id)
-        anns = coco.loadAnns(ann_ids)
-        target = [ann['caption'] for ann in anns]
+        target = coco.loadAnns(ann_ids)
 
         path = coco.loadImgs(img_id)[0]['file_name']
+
         file_name = coco.loadImgs(img_id)[0]['file_name']
         domain_idx = self.name2domain[file_name]
 
@@ -82,7 +84,7 @@ class DomainDataset(DomainCocoDetection):
     def __init__(
         self, ann_file, root, embedding_dir, remove_images_without_annotations, transforms=None
     ):
-        super(DomainDataset, self).__init__(root, ann_file, embedding_dir)
+        super(DomainDataset, self).__init__(ann_file, root, embedding_dir)
         # sort indices for reproducible results
         self.ids = sorted(self.ids)
 
@@ -108,7 +110,7 @@ class DomainDataset(DomainCocoDetection):
         self._transforms = transforms
 
     def __getitem__(self, idx):
-        img, anno, vec = super(COCODataset, self).__getitem__(idx)
+        img, anno, vec = super(DomainDataset, self).__getitem__(idx)
 
         # filter crowd annotations
         # TODO might be better to add an extra field
@@ -137,8 +139,9 @@ class DomainDataset(DomainCocoDetection):
 
         if self._transforms is not None:
             img, target = self._transforms(img, target)
-
-        return img, target, idx, vec
+        #print(vec, idx)
+        #return img, target, idx, vec
+        return img, target, vec
 
     def get_img_info(self, index):
         img_id = self.id_to_img_map[index]

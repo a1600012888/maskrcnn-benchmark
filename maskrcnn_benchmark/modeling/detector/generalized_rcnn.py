@@ -48,13 +48,19 @@ class GeneralizedRCNN(nn.Module):
                 like `scores`, `labels` and `mask` (for Mask R-CNN models).
 
         """
+
+        embedding = torch.stack(embedding, 0)
+        #print(embedding.size(), 'em')
+        #print(_, '_')
         if self.training and targets is None:
             raise ValueError("In training mode, targets should be passed")
         images = to_image_list(images)
         if self.DOMAIN_SCC:
-            features = self.backbone(images.tensors, embedding)
-        else:
-            features = self.backbone(images.tensors)
+            self.backbone.embedding_vec = embedding
+            #embedding = embedding.to(images.tensors.get_device())
+            #features = self.backbone(images.tensors, embedding)
+
+        features = self.backbone(images.tensors)
         proposals, proposal_losses = self.rpn(images, features, targets)
         if self.roi_heads:
             x, result, detector_losses = self.roi_heads(features, proposals, targets)
