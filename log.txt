@@ -12257,3 +12257,1740 @@ TEST:
 2019-08-04 07:57:03,690 maskrcnn_benchmark.trainer INFO: Start training
 2019-08-04 07:57:43,173 maskrcnn_benchmark.trainer INFO: eta: 2 days, 1:15:09  iter: 20  loss: 2.7775 (2.7521)  loss_box_reg: 0.0511 (0.0518)  loss_classifier: 1.9617 (1.9345)  loss_objectness: 0.6826 (0.6819)  loss_rpn_box_reg: 0.0829 (0.0840)  time: 0.6884 (1.9705)  data: 0.0096 (1.4624)  lr: 0.008052  max mem: 6921
 2019-08-04 07:58:21,078 maskrcnn_benchmark.trainer INFO: eta: 2 days, 0:18:04  iter: 40  loss: 1.3257 (2.0853)  loss_box_reg: 0.0484 (0.0504)  loss_classifier: 0.5915 (1.3059)  loss_objectness: 0.6184 (0.6509)  loss_rpn_box_reg: 0.0719 (0.0782)  time: 0.5322 (1.9329)  data: 0.0123 (1.4316)  lr: 0.010212  max mem: 6921
+2019-08-05 10:00:33,243 maskrcnn_benchmark INFO: Using 8 GPUs
+2019-08-05 10:00:33,243 maskrcnn_benchmark INFO: Namespace(config_file='configs/bdd_faster_rcnn_fbnet_domain_2x.yaml', distributed=True, local_rank=0, opts=[], skip_test=False)
+2019-08-05 10:00:33,243 maskrcnn_benchmark INFO: Collecting env info (might take some time)
+2019-08-05 10:00:50,728 maskrcnn_benchmark INFO: 
+PyTorch version: 1.0.0
+Is debug build: No
+CUDA used to build PyTorch: 9.0.176
+
+OS: Debian GNU/Linux 9.9 (stretch)
+GCC version: (Debian 6.3.0-18+deb9u1) 6.3.0 20170516
+CMake version: Could not collect
+
+Python version: 3.7
+Is CUDA available: Yes
+CUDA runtime version: 10.0.130
+GPU models and configuration: 
+GPU 0: Tesla V100-SXM2-16GB
+GPU 1: Tesla V100-SXM2-16GB
+GPU 2: Tesla V100-SXM2-16GB
+GPU 3: Tesla V100-SXM2-16GB
+GPU 4: Tesla V100-SXM2-16GB
+GPU 5: Tesla V100-SXM2-16GB
+GPU 6: Tesla V100-SXM2-16GB
+GPU 7: Tesla V100-SXM2-16GB
+
+Nvidia driver version: 410.104
+cuDNN version: Probably one of the following:
+/usr/local/cuda-10.0/lib64/libcudnn.so.7.4.1
+/usr/local/cuda-10.0/lib64/libcudnn_static.a
+
+Versions of relevant libraries:
+[pip3] intel-numpy (1.15.1)
+[pip3] numpy (1.15.1)
+[pip3] torch (1.1.0)
+[pip3] torchvision (0.3.0)
+[conda] Could not collect
+        Pillow (6.1.0)
+2019-08-05 10:00:50,729 maskrcnn_benchmark INFO: Loaded configuration file configs/bdd_faster_rcnn_fbnet_domain_2x.yaml
+2019-08-05 10:00:50,730 maskrcnn_benchmark INFO: 
+MODEL:
+    # WEIGHT: '/rscratch/zhendong/tyz/maskrcnn-benchmark/results/fbnet-bdd-1x-no-pretrain/weight-50000.pth'
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    NUM_EXPERTS: 4
+  FBNET:
+    ARCH: "default"
+    BN_TYPE: "bn"
+    WIDTH_DIVISOR: 8
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16, )
+    BATCH_SIZE_PER_IMAGE: 256
+    PRE_NMS_TOP_N_TRAIN: 6000
+    PRE_NMS_TOP_N_TEST: 6000
+    POST_NMS_TOP_N_TRAIN: 2000
+    POST_NMS_TOP_N_TEST: 100
+    RPN_HEAD: FBNet.rpn_head
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+  ROI_BOX_HEAD:
+    POOLER_RESOLUTION: 6
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    NUM_CLASSES: 11
+# DATALOADER:
+#   NUM_WORKERS: 2
+DATASETS:
+  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  TEST: ("domain_bdd100k_cocofmt_val",)
+SOLVER:
+  BASE_LR: 0.06
+  #BASE_LR: 0.06
+  WARMUP_FACTOR: 0.1
+  WEIGHT_DECAY: 0.0001
+  STEPS: (60000, 90000)
+  MAX_ITER: 90000
+  IMS_PER_BATCH: 128  # 128  # for 8GPUs
+TEST:
+  IMS_PER_BATCH: 8
+INPUT:
+  MIN_SIZE_TRAIN: (320, )
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MAX_SIZE_TEST: 640
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+
+2019-08-05 10:00:50,731 maskrcnn_benchmark INFO: Running with config:
+AMP_VERBOSE: False
+DATALOADER:
+  ASPECT_RATIO_GROUPING: True
+  NUM_WORKERS: 2
+  SIZE_DIVISIBILITY: 0
+DATASETS:
+  TEST: ('domain_bdd100k_cocofmt_val',)
+  TRAIN: ('domain_bdd100k_cocofmt_train',)
+DTYPE: float32
+INPUT:
+  BRIGHTNESS: 0.0
+  CONTRAST: 0.0
+  HUE: 0.0
+  MAX_SIZE_TEST: 640
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MIN_SIZE_TRAIN: (320,)
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+  SATURATION: 0.0
+  TO_BGR255: True
+  VERTICAL_FLIP_PROB_TRAIN: 0.0
+MODEL:
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    FREEZE_CONV_BODY_AT: 2
+    IN_NUM: 2048
+    NUM_EXPERTS: 4
+  CLS_AGNOSTIC_BBOX_REG: False
+  DEVICE: cuda
+  FBNET:
+    ARCH: default
+    ARCH_DEF: 
+    BN_TYPE: bn
+    DET_HEAD_BLOCKS: []
+    DET_HEAD_LAST_SCALE: 1.0
+    DET_HEAD_STRIDE: 0
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+    KPTS_HEAD_BLOCKS: []
+    KPTS_HEAD_LAST_SCALE: 0.0
+    KPTS_HEAD_STRIDE: 0
+    MASK_HEAD_BLOCKS: []
+    MASK_HEAD_LAST_SCALE: 0.0
+    MASK_HEAD_STRIDE: 0
+    RPN_BN_TYPE: 
+    RPN_HEAD_BLOCKS: 0
+    SCALE_FACTOR: 1.0
+    WIDTH_DIVISOR: 8
+  FPN:
+    USE_GN: False
+    USE_RELU: False
+  GROUP_NORM:
+    DIM_PER_GP: -1
+    EPSILON: 1e-05
+    NUM_GROUPS: 32
+  KEYPOINT_ON: False
+  MASK_ON: False
+  META_ARCHITECTURE: GeneralizedRCNN
+  RESNETS:
+    BACKBONE_OUT_CHANNELS: 1024
+    DEFORMABLE_GROUPS: 1
+    NUM_GROUPS: 1
+    RES2_OUT_CHANNELS: 256
+    RES5_DILATION: 1
+    STAGE_WITH_DCN: (False, False, False, False)
+    STEM_FUNC: StemWithFixedBatchNorm
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: True
+    TRANS_FUNC: BottleneckWithFixedBatchNorm
+    WIDTH_PER_GROUP: 64
+    WITH_MODULATED_DCN: False
+  RETINANET:
+    ANCHOR_SIZES: (32, 64, 128, 256, 512)
+    ANCHOR_STRIDES: (8, 16, 32, 64, 128)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BBOX_REG_BETA: 0.11
+    BBOX_REG_WEIGHT: 4.0
+    BG_IOU_THRESHOLD: 0.4
+    FG_IOU_THRESHOLD: 0.5
+    INFERENCE_TH: 0.05
+    LOSS_ALPHA: 0.25
+    LOSS_GAMMA: 2.0
+    NMS_TH: 0.4
+    NUM_CLASSES: 81
+    NUM_CONVS: 4
+    OCTAVE: 2.0
+    PRE_NMS_TOP_N: 1000
+    PRIOR_PROB: 0.01
+    SCALES_PER_OCTAVE: 3
+    STRADDLE_THRESH: 0
+    USE_C5: True
+  RETINANET_ON: False
+  ROI_BOX_HEAD:
+    CONV_HEAD_DIM: 256
+    DILATION: 1
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 11
+    NUM_STACKED_CONVS: 4
+    POOLER_RESOLUTION: 6
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: FastRCNNPredictor
+    USE_GN: False
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+    BBOX_REG_WEIGHTS: (10.0, 10.0, 5.0, 5.0)
+    BG_IOU_THRESHOLD: 0.5
+    DETECTIONS_PER_IMG: 100
+    FG_IOU_THRESHOLD: 0.5
+    NMS: 0.5
+    POSITIVE_FRACTION: 0.25
+    SCORE_THRESH: 0.05
+    USE_FPN: False
+  ROI_KEYPOINT_HEAD:
+    CONV_LAYERS: (512, 512, 512, 512, 512, 512, 512, 512)
+    FEATURE_EXTRACTOR: KeypointRCNNFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 17
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: KeypointRCNNPredictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+  ROI_MASK_HEAD:
+    CONV_LAYERS: (256, 256, 256, 256)
+    DILATION: 1
+    FEATURE_EXTRACTOR: ResNet50Conv5ROIFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    POSTPROCESS_MASKS: False
+    POSTPROCESS_MASKS_THRESHOLD: 0.5
+    PREDICTOR: MaskRCNNC4Predictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+    USE_GN: False
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16,)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BATCH_SIZE_PER_IMAGE: 256
+    BG_IOU_THRESHOLD: 0.3
+    FG_IOU_THRESHOLD: 0.7
+    FPN_POST_NMS_PER_BATCH: True
+    FPN_POST_NMS_TOP_N_TEST: 2000
+    FPN_POST_NMS_TOP_N_TRAIN: 2000
+    MIN_SIZE: 0
+    NMS_THRESH: 0.7
+    POSITIVE_FRACTION: 0.5
+    POST_NMS_TOP_N_TEST: 100
+    POST_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 6000
+    PRE_NMS_TOP_N_TRAIN: 6000
+    RPN_HEAD: FBNet.rpn_head
+    STRADDLE_THRESH: 0
+    USE_FPN: False
+  RPN_ONLY: False
+  WEIGHT: 
+OUTPUT_DIR: .
+PATHS_CATALOG: /mnt/rscratch1/tyz/maskrcnn-benchmark/maskrcnn_benchmark/config/paths_catalog.py
+SOLVER:
+  BASE_LR: 0.06
+  BIAS_LR_FACTOR: 2
+  CHECKPOINT_PERIOD: 2500
+  GAMMA: 0.1
+  IMS_PER_BATCH: 128
+  MAX_ITER: 90000
+  MOMENTUM: 0.9
+  STEPS: (60000, 90000)
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 500
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0001
+  WEIGHT_DECAY_BIAS: 0
+TEST:
+  BBOX_AUG:
+    ENABLED: False
+    H_FLIP: False
+    MAX_SIZE: 4000
+    SCALES: ()
+    SCALE_H_FLIP: False
+  DETECTIONS_PER_IMG: 100
+  EXPECTED_RESULTS: []
+  EXPECTED_RESULTS_SIGMA_TOL: 4
+  IMS_PER_BATCH: 8
+2019-08-05 10:00:50,731 maskrcnn_benchmark INFO: Saving config into: ./config.yml
+2019-08-05 10:00:50,753 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:02:37,759 maskrcnn_benchmark INFO: Using 8 GPUs
+2019-08-05 10:02:37,759 maskrcnn_benchmark INFO: Namespace(config_file='configs/bdd_faster_rcnn_fbnet_domain_2x.yaml', distributed=True, local_rank=0, opts=[], skip_test=False)
+2019-08-05 10:02:37,759 maskrcnn_benchmark INFO: Collecting env info (might take some time)
+2019-08-05 10:02:46,114 maskrcnn_benchmark INFO: 
+PyTorch version: 1.0.0
+Is debug build: No
+CUDA used to build PyTorch: 9.0.176
+
+OS: Debian GNU/Linux 9.9 (stretch)
+GCC version: (Debian 6.3.0-18+deb9u1) 6.3.0 20170516
+CMake version: Could not collect
+
+Python version: 3.7
+Is CUDA available: Yes
+CUDA runtime version: 10.0.130
+GPU models and configuration: 
+GPU 0: Tesla V100-SXM2-16GB
+GPU 1: Tesla V100-SXM2-16GB
+GPU 2: Tesla V100-SXM2-16GB
+GPU 3: Tesla V100-SXM2-16GB
+GPU 4: Tesla V100-SXM2-16GB
+GPU 5: Tesla V100-SXM2-16GB
+GPU 6: Tesla V100-SXM2-16GB
+GPU 7: Tesla V100-SXM2-16GB
+
+Nvidia driver version: 410.104
+cuDNN version: Probably one of the following:
+/usr/local/cuda-10.0/lib64/libcudnn.so.7.4.1
+/usr/local/cuda-10.0/lib64/libcudnn_static.a
+
+Versions of relevant libraries:
+[pip3] intel-numpy (1.15.1)
+[pip3] numpy (1.15.1)
+[pip3] torch (1.1.0)
+[pip3] torchvision (0.3.0)
+[conda] Could not collect
+        Pillow (6.1.0)
+2019-08-05 10:02:46,114 maskrcnn_benchmark INFO: Loaded configuration file configs/bdd_faster_rcnn_fbnet_domain_2x.yaml
+2019-08-05 10:02:46,115 maskrcnn_benchmark INFO: 
+MODEL:
+    # WEIGHT: '/rscratch/zhendong/tyz/maskrcnn-benchmark/results/fbnet-bdd-1x-no-pretrain/weight-50000.pth'
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    NUM_EXPERTS: 4
+  FBNET:
+    ARCH: "default"
+    BN_TYPE: "bn"
+    WIDTH_DIVISOR: 8
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16, )
+    BATCH_SIZE_PER_IMAGE: 256
+    PRE_NMS_TOP_N_TRAIN: 6000
+    PRE_NMS_TOP_N_TEST: 6000
+    POST_NMS_TOP_N_TRAIN: 2000
+    POST_NMS_TOP_N_TEST: 100
+    RPN_HEAD: FBNet.rpn_head
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+  ROI_BOX_HEAD:
+    POOLER_RESOLUTION: 6
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    NUM_CLASSES: 11
+# DATALOADER:
+#   NUM_WORKERS: 2
+DATASETS:
+  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  TEST: ("domain_bdd100k_cocofmt_val",)
+SOLVER:
+  BASE_LR: 0.06
+  #BASE_LR: 0.06
+  WARMUP_FACTOR: 0.1
+  WEIGHT_DECAY: 0.0001
+  STEPS: (60000, 90000)
+  MAX_ITER: 90000
+  IMS_PER_BATCH: 128  # 128  # for 8GPUs
+TEST:
+  IMS_PER_BATCH: 8
+INPUT:
+  MIN_SIZE_TRAIN: (320, )
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MAX_SIZE_TEST: 640
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+
+2019-08-05 10:02:46,116 maskrcnn_benchmark INFO: Running with config:
+AMP_VERBOSE: False
+DATALOADER:
+  ASPECT_RATIO_GROUPING: True
+  NUM_WORKERS: 2
+  SIZE_DIVISIBILITY: 0
+DATASETS:
+  TEST: ('domain_bdd100k_cocofmt_val',)
+  TRAIN: ('domain_bdd100k_cocofmt_train',)
+DTYPE: float32
+INPUT:
+  BRIGHTNESS: 0.0
+  CONTRAST: 0.0
+  HUE: 0.0
+  MAX_SIZE_TEST: 640
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MIN_SIZE_TRAIN: (320,)
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+  SATURATION: 0.0
+  TO_BGR255: True
+  VERTICAL_FLIP_PROB_TRAIN: 0.0
+MODEL:
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    FREEZE_CONV_BODY_AT: 2
+    IN_NUM: 2048
+    NUM_EXPERTS: 4
+  CLS_AGNOSTIC_BBOX_REG: False
+  DEVICE: cuda
+  FBNET:
+    ARCH: default
+    ARCH_DEF: 
+    BN_TYPE: bn
+    DET_HEAD_BLOCKS: []
+    DET_HEAD_LAST_SCALE: 1.0
+    DET_HEAD_STRIDE: 0
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+    KPTS_HEAD_BLOCKS: []
+    KPTS_HEAD_LAST_SCALE: 0.0
+    KPTS_HEAD_STRIDE: 0
+    MASK_HEAD_BLOCKS: []
+    MASK_HEAD_LAST_SCALE: 0.0
+    MASK_HEAD_STRIDE: 0
+    RPN_BN_TYPE: 
+    RPN_HEAD_BLOCKS: 0
+    SCALE_FACTOR: 1.0
+    WIDTH_DIVISOR: 8
+  FPN:
+    USE_GN: False
+    USE_RELU: False
+  GROUP_NORM:
+    DIM_PER_GP: -1
+    EPSILON: 1e-05
+    NUM_GROUPS: 32
+  KEYPOINT_ON: False
+  MASK_ON: False
+  META_ARCHITECTURE: GeneralizedRCNN
+  RESNETS:
+    BACKBONE_OUT_CHANNELS: 1024
+    DEFORMABLE_GROUPS: 1
+    NUM_GROUPS: 1
+    RES2_OUT_CHANNELS: 256
+    RES5_DILATION: 1
+    STAGE_WITH_DCN: (False, False, False, False)
+    STEM_FUNC: StemWithFixedBatchNorm
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: True
+    TRANS_FUNC: BottleneckWithFixedBatchNorm
+    WIDTH_PER_GROUP: 64
+    WITH_MODULATED_DCN: False
+  RETINANET:
+    ANCHOR_SIZES: (32, 64, 128, 256, 512)
+    ANCHOR_STRIDES: (8, 16, 32, 64, 128)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BBOX_REG_BETA: 0.11
+    BBOX_REG_WEIGHT: 4.0
+    BG_IOU_THRESHOLD: 0.4
+    FG_IOU_THRESHOLD: 0.5
+    INFERENCE_TH: 0.05
+    LOSS_ALPHA: 0.25
+    LOSS_GAMMA: 2.0
+    NMS_TH: 0.4
+    NUM_CLASSES: 81
+    NUM_CONVS: 4
+    OCTAVE: 2.0
+    PRE_NMS_TOP_N: 1000
+    PRIOR_PROB: 0.01
+    SCALES_PER_OCTAVE: 3
+    STRADDLE_THRESH: 0
+    USE_C5: True
+  RETINANET_ON: False
+  ROI_BOX_HEAD:
+    CONV_HEAD_DIM: 256
+    DILATION: 1
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 11
+    NUM_STACKED_CONVS: 4
+    POOLER_RESOLUTION: 6
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: FastRCNNPredictor
+    USE_GN: False
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+    BBOX_REG_WEIGHTS: (10.0, 10.0, 5.0, 5.0)
+    BG_IOU_THRESHOLD: 0.5
+    DETECTIONS_PER_IMG: 100
+    FG_IOU_THRESHOLD: 0.5
+    NMS: 0.5
+    POSITIVE_FRACTION: 0.25
+    SCORE_THRESH: 0.05
+    USE_FPN: False
+  ROI_KEYPOINT_HEAD:
+    CONV_LAYERS: (512, 512, 512, 512, 512, 512, 512, 512)
+    FEATURE_EXTRACTOR: KeypointRCNNFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 17
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: KeypointRCNNPredictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+  ROI_MASK_HEAD:
+    CONV_LAYERS: (256, 256, 256, 256)
+    DILATION: 1
+    FEATURE_EXTRACTOR: ResNet50Conv5ROIFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    POSTPROCESS_MASKS: False
+    POSTPROCESS_MASKS_THRESHOLD: 0.5
+    PREDICTOR: MaskRCNNC4Predictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+    USE_GN: False
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16,)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BATCH_SIZE_PER_IMAGE: 256
+    BG_IOU_THRESHOLD: 0.3
+    FG_IOU_THRESHOLD: 0.7
+    FPN_POST_NMS_PER_BATCH: True
+    FPN_POST_NMS_TOP_N_TEST: 2000
+    FPN_POST_NMS_TOP_N_TRAIN: 2000
+    MIN_SIZE: 0
+    NMS_THRESH: 0.7
+    POSITIVE_FRACTION: 0.5
+    POST_NMS_TOP_N_TEST: 100
+    POST_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 6000
+    PRE_NMS_TOP_N_TRAIN: 6000
+    RPN_HEAD: FBNet.rpn_head
+    STRADDLE_THRESH: 0
+    USE_FPN: False
+  RPN_ONLY: False
+  WEIGHT: 
+OUTPUT_DIR: .
+PATHS_CATALOG: /mnt/rscratch1/tyz/maskrcnn-benchmark/maskrcnn_benchmark/config/paths_catalog.py
+SOLVER:
+  BASE_LR: 0.06
+  BIAS_LR_FACTOR: 2
+  CHECKPOINT_PERIOD: 2500
+  GAMMA: 0.1
+  IMS_PER_BATCH: 128
+  MAX_ITER: 90000
+  MOMENTUM: 0.9
+  STEPS: (60000, 90000)
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 500
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0001
+  WEIGHT_DECAY_BIAS: 0
+TEST:
+  BBOX_AUG:
+    ENABLED: False
+    H_FLIP: False
+    MAX_SIZE: 4000
+    SCALES: ()
+    SCALE_H_FLIP: False
+  DETECTIONS_PER_IMG: 100
+  EXPECTED_RESULTS: []
+  EXPECTED_RESULTS_SIGMA_TOL: 4
+  IMS_PER_BATCH: 8
+2019-08-05 10:02:46,116 maskrcnn_benchmark INFO: Saving config into: ./config.yml
+2019-08-05 10:02:46,137 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:02:46,192 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:02:46,201 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:02:46,286 maskrcnn_benchmark.utils.checkpoint INFO: No checkpoint found. Initializing model from scratch
+2019-08-05 10:02:46,286 maskrcnn_benchmark.data.build WARNING: When using more than one image per GPU you may encounter an out-of-memory (OOM) error if your GPU does not have sufficient memory. If this happens, you can reduce SOLVER.IMS_PER_BATCH (for training) or TEST.IMS_PER_BATCH (for inference). For training, you must also adjust the learning rate and schedule length according to the linear scaling rule. See for example: https://github.com/facebookresearch/Detectron/blob/master/configs/getting_started/tutorial_1gpu_e2e_faster_rcnn_R-50-FPN.yaml#L14
+2019-08-05 10:04:21,160 maskrcnn_benchmark INFO: Using 8 GPUs
+2019-08-05 10:04:21,160 maskrcnn_benchmark INFO: Namespace(config_file='configs/bdd_faster_rcnn_fbnet_domain_2x.yaml', distributed=True, local_rank=0, opts=[], skip_test=False)
+2019-08-05 10:04:21,160 maskrcnn_benchmark INFO: Collecting env info (might take some time)
+2019-08-05 10:04:28,176 maskrcnn_benchmark INFO: 
+PyTorch version: 1.0.0
+Is debug build: No
+CUDA used to build PyTorch: 9.0.176
+
+OS: Debian GNU/Linux 9.9 (stretch)
+GCC version: (Debian 6.3.0-18+deb9u1) 6.3.0 20170516
+CMake version: Could not collect
+
+Python version: 3.7
+Is CUDA available: Yes
+CUDA runtime version: 10.0.130
+GPU models and configuration: 
+GPU 0: Tesla V100-SXM2-16GB
+GPU 1: Tesla V100-SXM2-16GB
+GPU 2: Tesla V100-SXM2-16GB
+GPU 3: Tesla V100-SXM2-16GB
+GPU 4: Tesla V100-SXM2-16GB
+GPU 5: Tesla V100-SXM2-16GB
+GPU 6: Tesla V100-SXM2-16GB
+GPU 7: Tesla V100-SXM2-16GB
+
+Nvidia driver version: 410.104
+cuDNN version: Probably one of the following:
+/usr/local/cuda-10.0/lib64/libcudnn.so.7.4.1
+/usr/local/cuda-10.0/lib64/libcudnn_static.a
+
+Versions of relevant libraries:
+[pip3] intel-numpy (1.15.1)
+[pip3] numpy (1.15.1)
+[pip3] torch (1.1.0)
+[pip3] torchvision (0.3.0)
+[conda] Could not collect
+        Pillow (6.1.0)
+2019-08-05 10:04:28,177 maskrcnn_benchmark INFO: Loaded configuration file configs/bdd_faster_rcnn_fbnet_domain_2x.yaml
+2019-08-05 10:04:28,177 maskrcnn_benchmark INFO: 
+MODEL:
+    # WEIGHT: '/rscratch/zhendong/tyz/maskrcnn-benchmark/results/fbnet-bdd-1x-no-pretrain/weight-50000.pth'
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    NUM_EXPERTS: 4
+  FBNET:
+    ARCH: "default"
+    BN_TYPE: "bn"
+    WIDTH_DIVISOR: 8
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16, )
+    BATCH_SIZE_PER_IMAGE: 256
+    PRE_NMS_TOP_N_TRAIN: 6000
+    PRE_NMS_TOP_N_TEST: 6000
+    POST_NMS_TOP_N_TRAIN: 2000
+    POST_NMS_TOP_N_TEST: 100
+    RPN_HEAD: FBNet.rpn_head
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+  ROI_BOX_HEAD:
+    POOLER_RESOLUTION: 6
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    NUM_CLASSES: 11
+# DATALOADER:
+#   NUM_WORKERS: 2
+DATASETS:
+  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  TEST: ("domain_bdd100k_cocofmt_val",)
+SOLVER:
+  BASE_LR: 0.06
+  #BASE_LR: 0.06
+  WARMUP_FACTOR: 0.1
+  WEIGHT_DECAY: 0.0001
+  STEPS: (60000, 90000)
+  MAX_ITER: 90000
+  IMS_PER_BATCH: 128  # 128  # for 8GPUs
+TEST:
+  IMS_PER_BATCH: 8
+INPUT:
+  MIN_SIZE_TRAIN: (320, )
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MAX_SIZE_TEST: 640
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+
+2019-08-05 10:04:28,178 maskrcnn_benchmark INFO: Running with config:
+AMP_VERBOSE: False
+DATALOADER:
+  ASPECT_RATIO_GROUPING: True
+  NUM_WORKERS: 2
+  SIZE_DIVISIBILITY: 0
+DATASETS:
+  TEST: ('domain_bdd100k_cocofmt_val',)
+  TRAIN: ('domain_bdd100k_cocofmt_train',)
+DTYPE: float32
+INPUT:
+  BRIGHTNESS: 0.0
+  CONTRAST: 0.0
+  HUE: 0.0
+  MAX_SIZE_TEST: 640
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MIN_SIZE_TRAIN: (320,)
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+  SATURATION: 0.0
+  TO_BGR255: True
+  VERTICAL_FLIP_PROB_TRAIN: 0.0
+MODEL:
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    FREEZE_CONV_BODY_AT: 2
+    IN_NUM: 2048
+    NUM_EXPERTS: 4
+  CLS_AGNOSTIC_BBOX_REG: False
+  DEVICE: cuda
+  FBNET:
+    ARCH: default
+    ARCH_DEF: 
+    BN_TYPE: bn
+    DET_HEAD_BLOCKS: []
+    DET_HEAD_LAST_SCALE: 1.0
+    DET_HEAD_STRIDE: 0
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+    KPTS_HEAD_BLOCKS: []
+    KPTS_HEAD_LAST_SCALE: 0.0
+    KPTS_HEAD_STRIDE: 0
+    MASK_HEAD_BLOCKS: []
+    MASK_HEAD_LAST_SCALE: 0.0
+    MASK_HEAD_STRIDE: 0
+    RPN_BN_TYPE: 
+    RPN_HEAD_BLOCKS: 0
+    SCALE_FACTOR: 1.0
+    WIDTH_DIVISOR: 8
+  FPN:
+    USE_GN: False
+    USE_RELU: False
+  GROUP_NORM:
+    DIM_PER_GP: -1
+    EPSILON: 1e-05
+    NUM_GROUPS: 32
+  KEYPOINT_ON: False
+  MASK_ON: False
+  META_ARCHITECTURE: GeneralizedRCNN
+  RESNETS:
+    BACKBONE_OUT_CHANNELS: 1024
+    DEFORMABLE_GROUPS: 1
+    NUM_GROUPS: 1
+    RES2_OUT_CHANNELS: 256
+    RES5_DILATION: 1
+    STAGE_WITH_DCN: (False, False, False, False)
+    STEM_FUNC: StemWithFixedBatchNorm
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: True
+    TRANS_FUNC: BottleneckWithFixedBatchNorm
+    WIDTH_PER_GROUP: 64
+    WITH_MODULATED_DCN: False
+  RETINANET:
+    ANCHOR_SIZES: (32, 64, 128, 256, 512)
+    ANCHOR_STRIDES: (8, 16, 32, 64, 128)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BBOX_REG_BETA: 0.11
+    BBOX_REG_WEIGHT: 4.0
+    BG_IOU_THRESHOLD: 0.4
+    FG_IOU_THRESHOLD: 0.5
+    INFERENCE_TH: 0.05
+    LOSS_ALPHA: 0.25
+    LOSS_GAMMA: 2.0
+    NMS_TH: 0.4
+    NUM_CLASSES: 81
+    NUM_CONVS: 4
+    OCTAVE: 2.0
+    PRE_NMS_TOP_N: 1000
+    PRIOR_PROB: 0.01
+    SCALES_PER_OCTAVE: 3
+    STRADDLE_THRESH: 0
+    USE_C5: True
+  RETINANET_ON: False
+  ROI_BOX_HEAD:
+    CONV_HEAD_DIM: 256
+    DILATION: 1
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 11
+    NUM_STACKED_CONVS: 4
+    POOLER_RESOLUTION: 6
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: FastRCNNPredictor
+    USE_GN: False
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+    BBOX_REG_WEIGHTS: (10.0, 10.0, 5.0, 5.0)
+    BG_IOU_THRESHOLD: 0.5
+    DETECTIONS_PER_IMG: 100
+    FG_IOU_THRESHOLD: 0.5
+    NMS: 0.5
+    POSITIVE_FRACTION: 0.25
+    SCORE_THRESH: 0.05
+    USE_FPN: False
+  ROI_KEYPOINT_HEAD:
+    CONV_LAYERS: (512, 512, 512, 512, 512, 512, 512, 512)
+    FEATURE_EXTRACTOR: KeypointRCNNFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 17
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: KeypointRCNNPredictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+  ROI_MASK_HEAD:
+    CONV_LAYERS: (256, 256, 256, 256)
+    DILATION: 1
+    FEATURE_EXTRACTOR: ResNet50Conv5ROIFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    POSTPROCESS_MASKS: False
+    POSTPROCESS_MASKS_THRESHOLD: 0.5
+    PREDICTOR: MaskRCNNC4Predictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+    USE_GN: False
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16,)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BATCH_SIZE_PER_IMAGE: 256
+    BG_IOU_THRESHOLD: 0.3
+    FG_IOU_THRESHOLD: 0.7
+    FPN_POST_NMS_PER_BATCH: True
+    FPN_POST_NMS_TOP_N_TEST: 2000
+    FPN_POST_NMS_TOP_N_TRAIN: 2000
+    MIN_SIZE: 0
+    NMS_THRESH: 0.7
+    POSITIVE_FRACTION: 0.5
+    POST_NMS_TOP_N_TEST: 100
+    POST_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 6000
+    PRE_NMS_TOP_N_TRAIN: 6000
+    RPN_HEAD: FBNet.rpn_head
+    STRADDLE_THRESH: 0
+    USE_FPN: False
+  RPN_ONLY: False
+  WEIGHT: 
+OUTPUT_DIR: .
+PATHS_CATALOG: /mnt/rscratch1/tyz/maskrcnn-benchmark/maskrcnn_benchmark/config/paths_catalog.py
+SOLVER:
+  BASE_LR: 0.06
+  BIAS_LR_FACTOR: 2
+  CHECKPOINT_PERIOD: 2500
+  GAMMA: 0.1
+  IMS_PER_BATCH: 128
+  MAX_ITER: 90000
+  MOMENTUM: 0.9
+  STEPS: (60000, 90000)
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 500
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0001
+  WEIGHT_DECAY_BIAS: 0
+TEST:
+  BBOX_AUG:
+    ENABLED: False
+    H_FLIP: False
+    MAX_SIZE: 4000
+    SCALES: ()
+    SCALE_H_FLIP: False
+  DETECTIONS_PER_IMG: 100
+  EXPECTED_RESULTS: []
+  EXPECTED_RESULTS_SIGMA_TOL: 4
+  IMS_PER_BATCH: 8
+2019-08-05 10:04:28,178 maskrcnn_benchmark INFO: Saving config into: ./config.yml
+2019-08-05 10:04:28,198 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:04:28,263 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:04:28,273 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:04:28,534 maskrcnn_benchmark.utils.checkpoint INFO: No checkpoint found. Initializing model from scratch
+2019-08-05 10:04:28,534 maskrcnn_benchmark.data.build WARNING: When using more than one image per GPU you may encounter an out-of-memory (OOM) error if your GPU does not have sufficient memory. If this happens, you can reduce SOLVER.IMS_PER_BATCH (for training) or TEST.IMS_PER_BATCH (for inference). For training, you must also adjust the learning rate and schedule length according to the linear scaling rule. See for example: https://github.com/facebookresearch/Detectron/blob/master/configs/getting_started/tutorial_1gpu_e2e_faster_rcnn_R-50-FPN.yaml#L14
+2019-08-05 10:05:23,743 maskrcnn_benchmark INFO: Using 8 GPUs
+2019-08-05 10:05:23,743 maskrcnn_benchmark INFO: Namespace(config_file='configs/bdd_faster_rcnn_fbnet_domain_2x.yaml', distributed=True, local_rank=0, opts=[], skip_test=False)
+2019-08-05 10:05:23,743 maskrcnn_benchmark INFO: Collecting env info (might take some time)
+2019-08-05 10:05:32,128 maskrcnn_benchmark INFO: 
+PyTorch version: 1.0.0
+Is debug build: No
+CUDA used to build PyTorch: 9.0.176
+
+OS: Debian GNU/Linux 9.9 (stretch)
+GCC version: (Debian 6.3.0-18+deb9u1) 6.3.0 20170516
+CMake version: Could not collect
+
+Python version: 3.7
+Is CUDA available: Yes
+CUDA runtime version: 10.0.130
+GPU models and configuration: 
+GPU 0: Tesla V100-SXM2-16GB
+GPU 1: Tesla V100-SXM2-16GB
+GPU 2: Tesla V100-SXM2-16GB
+GPU 3: Tesla V100-SXM2-16GB
+GPU 4: Tesla V100-SXM2-16GB
+GPU 5: Tesla V100-SXM2-16GB
+GPU 6: Tesla V100-SXM2-16GB
+GPU 7: Tesla V100-SXM2-16GB
+
+Nvidia driver version: 410.104
+cuDNN version: Probably one of the following:
+/usr/local/cuda-10.0/lib64/libcudnn.so.7.4.1
+/usr/local/cuda-10.0/lib64/libcudnn_static.a
+
+Versions of relevant libraries:
+[pip3] intel-numpy (1.15.1)
+[pip3] numpy (1.15.1)
+[pip3] torch (1.1.0)
+[pip3] torchvision (0.3.0)
+[conda] Could not collect
+        Pillow (6.1.0)
+2019-08-05 10:05:32,129 maskrcnn_benchmark INFO: Loaded configuration file configs/bdd_faster_rcnn_fbnet_domain_2x.yaml
+2019-08-05 10:05:32,129 maskrcnn_benchmark INFO: 
+MODEL:
+    # WEIGHT: '/rscratch/zhendong/tyz/maskrcnn-benchmark/results/fbnet-bdd-1x-no-pretrain/weight-50000.pth'
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    NUM_EXPERTS: 4
+  FBNET:
+    ARCH: "default"
+    BN_TYPE: "bn"
+    WIDTH_DIVISOR: 8
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16, )
+    BATCH_SIZE_PER_IMAGE: 256
+    PRE_NMS_TOP_N_TRAIN: 6000
+    PRE_NMS_TOP_N_TEST: 6000
+    POST_NMS_TOP_N_TRAIN: 2000
+    POST_NMS_TOP_N_TEST: 100
+    RPN_HEAD: FBNet.rpn_head
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+  ROI_BOX_HEAD:
+    POOLER_RESOLUTION: 6
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    NUM_CLASSES: 11
+# DATALOADER:
+#   NUM_WORKERS: 2
+DATASETS:
+  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  TEST: ("domain_bdd100k_cocofmt_val",)
+SOLVER:
+  BASE_LR: 0.06
+  #BASE_LR: 0.06
+  WARMUP_FACTOR: 0.1
+  WEIGHT_DECAY: 0.0001
+  STEPS: (60000, 90000)
+  MAX_ITER: 90000
+  IMS_PER_BATCH: 128  # 128  # for 8GPUs
+TEST:
+  IMS_PER_BATCH: 8
+INPUT:
+  MIN_SIZE_TRAIN: (320, )
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MAX_SIZE_TEST: 640
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+
+2019-08-05 10:05:32,130 maskrcnn_benchmark INFO: Running with config:
+AMP_VERBOSE: False
+DATALOADER:
+  ASPECT_RATIO_GROUPING: True
+  NUM_WORKERS: 2
+  SIZE_DIVISIBILITY: 0
+DATASETS:
+  TEST: ('domain_bdd100k_cocofmt_val',)
+  TRAIN: ('domain_bdd100k_cocofmt_train',)
+DTYPE: float32
+INPUT:
+  BRIGHTNESS: 0.0
+  CONTRAST: 0.0
+  HUE: 0.0
+  MAX_SIZE_TEST: 640
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MIN_SIZE_TRAIN: (320,)
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+  SATURATION: 0.0
+  TO_BGR255: True
+  VERTICAL_FLIP_PROB_TRAIN: 0.0
+MODEL:
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    FREEZE_CONV_BODY_AT: 2
+    IN_NUM: 2048
+    NUM_EXPERTS: 4
+  CLS_AGNOSTIC_BBOX_REG: False
+  DEVICE: cuda
+  FBNET:
+    ARCH: default
+    ARCH_DEF: 
+    BN_TYPE: bn
+    DET_HEAD_BLOCKS: []
+    DET_HEAD_LAST_SCALE: 1.0
+    DET_HEAD_STRIDE: 0
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+    KPTS_HEAD_BLOCKS: []
+    KPTS_HEAD_LAST_SCALE: 0.0
+    KPTS_HEAD_STRIDE: 0
+    MASK_HEAD_BLOCKS: []
+    MASK_HEAD_LAST_SCALE: 0.0
+    MASK_HEAD_STRIDE: 0
+    RPN_BN_TYPE: 
+    RPN_HEAD_BLOCKS: 0
+    SCALE_FACTOR: 1.0
+    WIDTH_DIVISOR: 8
+  FPN:
+    USE_GN: False
+    USE_RELU: False
+  GROUP_NORM:
+    DIM_PER_GP: -1
+    EPSILON: 1e-05
+    NUM_GROUPS: 32
+  KEYPOINT_ON: False
+  MASK_ON: False
+  META_ARCHITECTURE: GeneralizedRCNN
+  RESNETS:
+    BACKBONE_OUT_CHANNELS: 1024
+    DEFORMABLE_GROUPS: 1
+    NUM_GROUPS: 1
+    RES2_OUT_CHANNELS: 256
+    RES5_DILATION: 1
+    STAGE_WITH_DCN: (False, False, False, False)
+    STEM_FUNC: StemWithFixedBatchNorm
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: True
+    TRANS_FUNC: BottleneckWithFixedBatchNorm
+    WIDTH_PER_GROUP: 64
+    WITH_MODULATED_DCN: False
+  RETINANET:
+    ANCHOR_SIZES: (32, 64, 128, 256, 512)
+    ANCHOR_STRIDES: (8, 16, 32, 64, 128)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BBOX_REG_BETA: 0.11
+    BBOX_REG_WEIGHT: 4.0
+    BG_IOU_THRESHOLD: 0.4
+    FG_IOU_THRESHOLD: 0.5
+    INFERENCE_TH: 0.05
+    LOSS_ALPHA: 0.25
+    LOSS_GAMMA: 2.0
+    NMS_TH: 0.4
+    NUM_CLASSES: 81
+    NUM_CONVS: 4
+    OCTAVE: 2.0
+    PRE_NMS_TOP_N: 1000
+    PRIOR_PROB: 0.01
+    SCALES_PER_OCTAVE: 3
+    STRADDLE_THRESH: 0
+    USE_C5: True
+  RETINANET_ON: False
+  ROI_BOX_HEAD:
+    CONV_HEAD_DIM: 256
+    DILATION: 1
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 11
+    NUM_STACKED_CONVS: 4
+    POOLER_RESOLUTION: 6
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: FastRCNNPredictor
+    USE_GN: False
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+    BBOX_REG_WEIGHTS: (10.0, 10.0, 5.0, 5.0)
+    BG_IOU_THRESHOLD: 0.5
+    DETECTIONS_PER_IMG: 100
+    FG_IOU_THRESHOLD: 0.5
+    NMS: 0.5
+    POSITIVE_FRACTION: 0.25
+    SCORE_THRESH: 0.05
+    USE_FPN: False
+  ROI_KEYPOINT_HEAD:
+    CONV_LAYERS: (512, 512, 512, 512, 512, 512, 512, 512)
+    FEATURE_EXTRACTOR: KeypointRCNNFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 17
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: KeypointRCNNPredictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+  ROI_MASK_HEAD:
+    CONV_LAYERS: (256, 256, 256, 256)
+    DILATION: 1
+    FEATURE_EXTRACTOR: ResNet50Conv5ROIFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    POSTPROCESS_MASKS: False
+    POSTPROCESS_MASKS_THRESHOLD: 0.5
+    PREDICTOR: MaskRCNNC4Predictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+    USE_GN: False
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16,)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BATCH_SIZE_PER_IMAGE: 256
+    BG_IOU_THRESHOLD: 0.3
+    FG_IOU_THRESHOLD: 0.7
+    FPN_POST_NMS_PER_BATCH: True
+    FPN_POST_NMS_TOP_N_TEST: 2000
+    FPN_POST_NMS_TOP_N_TRAIN: 2000
+    MIN_SIZE: 0
+    NMS_THRESH: 0.7
+    POSITIVE_FRACTION: 0.5
+    POST_NMS_TOP_N_TEST: 100
+    POST_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 6000
+    PRE_NMS_TOP_N_TRAIN: 6000
+    RPN_HEAD: FBNet.rpn_head
+    STRADDLE_THRESH: 0
+    USE_FPN: False
+  RPN_ONLY: False
+  WEIGHT: 
+OUTPUT_DIR: .
+PATHS_CATALOG: /mnt/rscratch1/tyz/maskrcnn-benchmark/maskrcnn_benchmark/config/paths_catalog.py
+SOLVER:
+  BASE_LR: 0.06
+  BIAS_LR_FACTOR: 2
+  CHECKPOINT_PERIOD: 2500
+  GAMMA: 0.1
+  IMS_PER_BATCH: 128
+  MAX_ITER: 90000
+  MOMENTUM: 0.9
+  STEPS: (60000, 90000)
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 500
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0001
+  WEIGHT_DECAY_BIAS: 0
+TEST:
+  BBOX_AUG:
+    ENABLED: False
+    H_FLIP: False
+    MAX_SIZE: 4000
+    SCALES: ()
+    SCALE_H_FLIP: False
+  DETECTIONS_PER_IMG: 100
+  EXPECTED_RESULTS: []
+  EXPECTED_RESULTS_SIGMA_TOL: 4
+  IMS_PER_BATCH: 8
+2019-08-05 10:05:32,130 maskrcnn_benchmark INFO: Saving config into: ./config.yml
+2019-08-05 10:05:32,149 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:05:32,203 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:05:32,213 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:05:32,298 maskrcnn_benchmark.utils.checkpoint INFO: No checkpoint found. Initializing model from scratch
+2019-08-05 10:05:32,298 maskrcnn_benchmark.data.build WARNING: When using more than one image per GPU you may encounter an out-of-memory (OOM) error if your GPU does not have sufficient memory. If this happens, you can reduce SOLVER.IMS_PER_BATCH (for training) or TEST.IMS_PER_BATCH (for inference). For training, you must also adjust the learning rate and schedule length according to the linear scaling rule. See for example: https://github.com/facebookresearch/Detectron/blob/master/configs/getting_started/tutorial_1gpu_e2e_faster_rcnn_R-50-FPN.yaml#L14
+2019-08-05 10:07:03,126 maskrcnn_benchmark INFO: Using 8 GPUs
+2019-08-05 10:07:03,126 maskrcnn_benchmark INFO: Namespace(config_file='configs/bdd_faster_rcnn_fbnet_domain_2x.yaml', distributed=True, local_rank=0, opts=[], skip_test=False)
+2019-08-05 10:07:03,126 maskrcnn_benchmark INFO: Collecting env info (might take some time)
+2019-08-05 10:07:08,065 maskrcnn_benchmark INFO: 
+PyTorch version: 1.0.0
+Is debug build: No
+CUDA used to build PyTorch: 9.0.176
+
+OS: Debian GNU/Linux 9.9 (stretch)
+GCC version: (Debian 6.3.0-18+deb9u1) 6.3.0 20170516
+CMake version: Could not collect
+
+Python version: 3.7
+Is CUDA available: Yes
+CUDA runtime version: 10.0.130
+GPU models and configuration: 
+GPU 0: Tesla V100-SXM2-16GB
+GPU 1: Tesla V100-SXM2-16GB
+GPU 2: Tesla V100-SXM2-16GB
+GPU 3: Tesla V100-SXM2-16GB
+GPU 4: Tesla V100-SXM2-16GB
+GPU 5: Tesla V100-SXM2-16GB
+GPU 6: Tesla V100-SXM2-16GB
+GPU 7: Tesla V100-SXM2-16GB
+
+Nvidia driver version: 410.104
+cuDNN version: Probably one of the following:
+/usr/local/cuda-10.0/lib64/libcudnn.so.7.4.1
+/usr/local/cuda-10.0/lib64/libcudnn_static.a
+
+Versions of relevant libraries:
+[pip3] intel-numpy (1.15.1)
+[pip3] numpy (1.15.1)
+[pip3] torch (1.1.0)
+[pip3] torchvision (0.3.0)
+[conda] Could not collect
+        Pillow (6.1.0)
+2019-08-05 10:07:08,066 maskrcnn_benchmark INFO: Loaded configuration file configs/bdd_faster_rcnn_fbnet_domain_2x.yaml
+2019-08-05 10:07:08,066 maskrcnn_benchmark INFO: 
+MODEL:
+    # WEIGHT: '/rscratch/zhendong/tyz/maskrcnn-benchmark/results/fbnet-bdd-1x-no-pretrain/weight-50000.pth'
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    NUM_EXPERTS: 4
+  FBNET:
+    ARCH: "default"
+    BN_TYPE: "bn"
+    WIDTH_DIVISOR: 8
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16, )
+    BATCH_SIZE_PER_IMAGE: 256
+    PRE_NMS_TOP_N_TRAIN: 6000
+    PRE_NMS_TOP_N_TEST: 6000
+    POST_NMS_TOP_N_TRAIN: 2000
+    POST_NMS_TOP_N_TEST: 100
+    RPN_HEAD: FBNet.rpn_head
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+  ROI_BOX_HEAD:
+    POOLER_RESOLUTION: 6
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    NUM_CLASSES: 11
+# DATALOADER:
+#   NUM_WORKERS: 2
+DATASETS:
+  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  TEST: ("domain_bdd100k_cocofmt_val",)
+SOLVER:
+  BASE_LR: 0.06
+  #BASE_LR: 0.06
+  WARMUP_FACTOR: 0.1
+  WEIGHT_DECAY: 0.0001
+  STEPS: (60000, 90000)
+  MAX_ITER: 90000
+  IMS_PER_BATCH: 128  # 128  # for 8GPUs
+TEST:
+  IMS_PER_BATCH: 8
+INPUT:
+  MIN_SIZE_TRAIN: (320, )
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MAX_SIZE_TEST: 640
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+
+2019-08-05 10:07:08,067 maskrcnn_benchmark INFO: Running with config:
+AMP_VERBOSE: False
+DATALOADER:
+  ASPECT_RATIO_GROUPING: True
+  NUM_WORKERS: 2
+  SIZE_DIVISIBILITY: 0
+DATASETS:
+  TEST: ('domain_bdd100k_cocofmt_val',)
+  TRAIN: ('domain_bdd100k_cocofmt_train',)
+DTYPE: float32
+INPUT:
+  BRIGHTNESS: 0.0
+  CONTRAST: 0.0
+  HUE: 0.0
+  MAX_SIZE_TEST: 640
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MIN_SIZE_TRAIN: (320,)
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+  SATURATION: 0.0
+  TO_BGR255: True
+  VERTICAL_FLIP_PROB_TRAIN: 0.0
+MODEL:
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    FREEZE_CONV_BODY_AT: 2
+    IN_NUM: 2048
+    NUM_EXPERTS: 4
+  CLS_AGNOSTIC_BBOX_REG: False
+  DEVICE: cuda
+  FBNET:
+    ARCH: default
+    ARCH_DEF: 
+    BN_TYPE: bn
+    DET_HEAD_BLOCKS: []
+    DET_HEAD_LAST_SCALE: 1.0
+    DET_HEAD_STRIDE: 0
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+    KPTS_HEAD_BLOCKS: []
+    KPTS_HEAD_LAST_SCALE: 0.0
+    KPTS_HEAD_STRIDE: 0
+    MASK_HEAD_BLOCKS: []
+    MASK_HEAD_LAST_SCALE: 0.0
+    MASK_HEAD_STRIDE: 0
+    RPN_BN_TYPE: 
+    RPN_HEAD_BLOCKS: 0
+    SCALE_FACTOR: 1.0
+    WIDTH_DIVISOR: 8
+  FPN:
+    USE_GN: False
+    USE_RELU: False
+  GROUP_NORM:
+    DIM_PER_GP: -1
+    EPSILON: 1e-05
+    NUM_GROUPS: 32
+  KEYPOINT_ON: False
+  MASK_ON: False
+  META_ARCHITECTURE: GeneralizedRCNN
+  RESNETS:
+    BACKBONE_OUT_CHANNELS: 1024
+    DEFORMABLE_GROUPS: 1
+    NUM_GROUPS: 1
+    RES2_OUT_CHANNELS: 256
+    RES5_DILATION: 1
+    STAGE_WITH_DCN: (False, False, False, False)
+    STEM_FUNC: StemWithFixedBatchNorm
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: True
+    TRANS_FUNC: BottleneckWithFixedBatchNorm
+    WIDTH_PER_GROUP: 64
+    WITH_MODULATED_DCN: False
+  RETINANET:
+    ANCHOR_SIZES: (32, 64, 128, 256, 512)
+    ANCHOR_STRIDES: (8, 16, 32, 64, 128)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BBOX_REG_BETA: 0.11
+    BBOX_REG_WEIGHT: 4.0
+    BG_IOU_THRESHOLD: 0.4
+    FG_IOU_THRESHOLD: 0.5
+    INFERENCE_TH: 0.05
+    LOSS_ALPHA: 0.25
+    LOSS_GAMMA: 2.0
+    NMS_TH: 0.4
+    NUM_CLASSES: 81
+    NUM_CONVS: 4
+    OCTAVE: 2.0
+    PRE_NMS_TOP_N: 1000
+    PRIOR_PROB: 0.01
+    SCALES_PER_OCTAVE: 3
+    STRADDLE_THRESH: 0
+    USE_C5: True
+  RETINANET_ON: False
+  ROI_BOX_HEAD:
+    CONV_HEAD_DIM: 256
+    DILATION: 1
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 11
+    NUM_STACKED_CONVS: 4
+    POOLER_RESOLUTION: 6
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: FastRCNNPredictor
+    USE_GN: False
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+    BBOX_REG_WEIGHTS: (10.0, 10.0, 5.0, 5.0)
+    BG_IOU_THRESHOLD: 0.5
+    DETECTIONS_PER_IMG: 100
+    FG_IOU_THRESHOLD: 0.5
+    NMS: 0.5
+    POSITIVE_FRACTION: 0.25
+    SCORE_THRESH: 0.05
+    USE_FPN: False
+  ROI_KEYPOINT_HEAD:
+    CONV_LAYERS: (512, 512, 512, 512, 512, 512, 512, 512)
+    FEATURE_EXTRACTOR: KeypointRCNNFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 17
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: KeypointRCNNPredictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+  ROI_MASK_HEAD:
+    CONV_LAYERS: (256, 256, 256, 256)
+    DILATION: 1
+    FEATURE_EXTRACTOR: ResNet50Conv5ROIFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    POSTPROCESS_MASKS: False
+    POSTPROCESS_MASKS_THRESHOLD: 0.5
+    PREDICTOR: MaskRCNNC4Predictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+    USE_GN: False
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16,)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BATCH_SIZE_PER_IMAGE: 256
+    BG_IOU_THRESHOLD: 0.3
+    FG_IOU_THRESHOLD: 0.7
+    FPN_POST_NMS_PER_BATCH: True
+    FPN_POST_NMS_TOP_N_TEST: 2000
+    FPN_POST_NMS_TOP_N_TRAIN: 2000
+    MIN_SIZE: 0
+    NMS_THRESH: 0.7
+    POSITIVE_FRACTION: 0.5
+    POST_NMS_TOP_N_TEST: 100
+    POST_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 6000
+    PRE_NMS_TOP_N_TRAIN: 6000
+    RPN_HEAD: FBNet.rpn_head
+    STRADDLE_THRESH: 0
+    USE_FPN: False
+  RPN_ONLY: False
+  WEIGHT: 
+OUTPUT_DIR: .
+PATHS_CATALOG: /mnt/rscratch1/tyz/maskrcnn-benchmark/maskrcnn_benchmark/config/paths_catalog.py
+SOLVER:
+  BASE_LR: 0.06
+  BIAS_LR_FACTOR: 2
+  CHECKPOINT_PERIOD: 2500
+  GAMMA: 0.1
+  IMS_PER_BATCH: 128
+  MAX_ITER: 90000
+  MOMENTUM: 0.9
+  STEPS: (60000, 90000)
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 500
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0001
+  WEIGHT_DECAY_BIAS: 0
+TEST:
+  BBOX_AUG:
+    ENABLED: False
+    H_FLIP: False
+    MAX_SIZE: 4000
+    SCALES: ()
+    SCALE_H_FLIP: False
+  DETECTIONS_PER_IMG: 100
+  EXPECTED_RESULTS: []
+  EXPECTED_RESULTS_SIGMA_TOL: 4
+  IMS_PER_BATCH: 8
+2019-08-05 10:07:08,067 maskrcnn_benchmark INFO: Saving config into: ./config.yml
+2019-08-05 10:07:08,096 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:07:08,157 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:07:08,167 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:07:10,025 maskrcnn_benchmark.utils.checkpoint INFO: No checkpoint found. Initializing model from scratch
+2019-08-05 10:07:10,026 maskrcnn_benchmark.data.build WARNING: When using more than one image per GPU you may encounter an out-of-memory (OOM) error if your GPU does not have sufficient memory. If this happens, you can reduce SOLVER.IMS_PER_BATCH (for training) or TEST.IMS_PER_BATCH (for inference). For training, you must also adjust the learning rate and schedule length according to the linear scaling rule. See for example: https://github.com/facebookresearch/Detectron/blob/master/configs/getting_started/tutorial_1gpu_e2e_faster_rcnn_R-50-FPN.yaml#L14
+2019-08-05 10:08:38,427 maskrcnn_benchmark INFO: Using 8 GPUs
+2019-08-05 10:08:38,427 maskrcnn_benchmark INFO: Namespace(config_file='configs/bdd_faster_rcnn_fbnet_domain_2x.yaml', distributed=True, local_rank=0, opts=[], skip_test=False)
+2019-08-05 10:08:38,427 maskrcnn_benchmark INFO: Collecting env info (might take some time)
+2019-08-05 10:08:46,810 maskrcnn_benchmark INFO: 
+PyTorch version: 1.0.0
+Is debug build: No
+CUDA used to build PyTorch: 9.0.176
+
+OS: Debian GNU/Linux 9.9 (stretch)
+GCC version: (Debian 6.3.0-18+deb9u1) 6.3.0 20170516
+CMake version: Could not collect
+
+Python version: 3.7
+Is CUDA available: Yes
+CUDA runtime version: 10.0.130
+GPU models and configuration: 
+GPU 0: Tesla V100-SXM2-16GB
+GPU 1: Tesla V100-SXM2-16GB
+GPU 2: Tesla V100-SXM2-16GB
+GPU 3: Tesla V100-SXM2-16GB
+GPU 4: Tesla V100-SXM2-16GB
+GPU 5: Tesla V100-SXM2-16GB
+GPU 6: Tesla V100-SXM2-16GB
+GPU 7: Tesla V100-SXM2-16GB
+
+Nvidia driver version: 410.104
+cuDNN version: Probably one of the following:
+/usr/local/cuda-10.0/lib64/libcudnn.so.7.4.1
+/usr/local/cuda-10.0/lib64/libcudnn_static.a
+
+Versions of relevant libraries:
+[pip3] intel-numpy (1.15.1)
+[pip3] numpy (1.15.1)
+[pip3] torch (1.1.0)
+[pip3] torchvision (0.3.0)
+[conda] Could not collect
+        Pillow (6.1.0)
+2019-08-05 10:08:46,810 maskrcnn_benchmark INFO: Loaded configuration file configs/bdd_faster_rcnn_fbnet_domain_2x.yaml
+2019-08-05 10:08:46,811 maskrcnn_benchmark INFO: 
+MODEL:
+    # WEIGHT: '/rscratch/zhendong/tyz/maskrcnn-benchmark/results/fbnet-bdd-1x-no-pretrain/weight-50000.pth'
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    NUM_EXPERTS: 4
+  FBNET:
+    ARCH: "default"
+    BN_TYPE: "bn"
+    WIDTH_DIVISOR: 8
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16, )
+    BATCH_SIZE_PER_IMAGE: 256
+    PRE_NMS_TOP_N_TRAIN: 6000
+    PRE_NMS_TOP_N_TEST: 6000
+    POST_NMS_TOP_N_TRAIN: 2000
+    POST_NMS_TOP_N_TEST: 100
+    RPN_HEAD: FBNet.rpn_head
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+  ROI_BOX_HEAD:
+    POOLER_RESOLUTION: 6
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    NUM_CLASSES: 11
+# DATALOADER:
+#   NUM_WORKERS: 2
+DATASETS:
+  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  TEST: ("domain_bdd100k_cocofmt_val",)
+SOLVER:
+  BASE_LR: 0.06
+  #BASE_LR: 0.06
+  WARMUP_FACTOR: 0.1
+  WEIGHT_DECAY: 0.0001
+  STEPS: (60000, 90000)
+  MAX_ITER: 90000
+  IMS_PER_BATCH: 128  # 128  # for 8GPUs
+TEST:
+  IMS_PER_BATCH: 8
+INPUT:
+  MIN_SIZE_TRAIN: (320, )
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MAX_SIZE_TEST: 640
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+
+2019-08-05 10:08:46,811 maskrcnn_benchmark INFO: Running with config:
+AMP_VERBOSE: False
+DATALOADER:
+  ASPECT_RATIO_GROUPING: True
+  NUM_WORKERS: 2
+  SIZE_DIVISIBILITY: 0
+DATASETS:
+  TEST: ('domain_bdd100k_cocofmt_val',)
+  TRAIN: ('domain_bdd100k_cocofmt_train',)
+DTYPE: float32
+INPUT:
+  BRIGHTNESS: 0.0
+  CONTRAST: 0.0
+  HUE: 0.0
+  MAX_SIZE_TEST: 640
+  MAX_SIZE_TRAIN: 640
+  MIN_SIZE_TEST: 320
+  MIN_SIZE_TRAIN: (320,)
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]
+  SATURATION: 0.0
+  TO_BGR255: True
+  VERTICAL_FLIP_PROB_TRAIN: 0.0
+MODEL:
+  BACKBONE:
+    CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    FREEZE_CONV_BODY_AT: 2
+    IN_NUM: 2048
+    NUM_EXPERTS: 4
+  CLS_AGNOSTIC_BBOX_REG: False
+  DEVICE: cuda
+  FBNET:
+    ARCH: default
+    ARCH_DEF: 
+    BN_TYPE: bn
+    DET_HEAD_BLOCKS: []
+    DET_HEAD_LAST_SCALE: 1.0
+    DET_HEAD_STRIDE: 0
+    DW_CONV_SKIP_BN: True
+    DW_CONV_SKIP_RELU: True
+    KPTS_HEAD_BLOCKS: []
+    KPTS_HEAD_LAST_SCALE: 0.0
+    KPTS_HEAD_STRIDE: 0
+    MASK_HEAD_BLOCKS: []
+    MASK_HEAD_LAST_SCALE: 0.0
+    MASK_HEAD_STRIDE: 0
+    RPN_BN_TYPE: 
+    RPN_HEAD_BLOCKS: 0
+    SCALE_FACTOR: 1.0
+    WIDTH_DIVISOR: 8
+  FPN:
+    USE_GN: False
+    USE_RELU: False
+  GROUP_NORM:
+    DIM_PER_GP: -1
+    EPSILON: 1e-05
+    NUM_GROUPS: 32
+  KEYPOINT_ON: False
+  MASK_ON: False
+  META_ARCHITECTURE: GeneralizedRCNN
+  RESNETS:
+    BACKBONE_OUT_CHANNELS: 1024
+    DEFORMABLE_GROUPS: 1
+    NUM_GROUPS: 1
+    RES2_OUT_CHANNELS: 256
+    RES5_DILATION: 1
+    STAGE_WITH_DCN: (False, False, False, False)
+    STEM_FUNC: StemWithFixedBatchNorm
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: True
+    TRANS_FUNC: BottleneckWithFixedBatchNorm
+    WIDTH_PER_GROUP: 64
+    WITH_MODULATED_DCN: False
+  RETINANET:
+    ANCHOR_SIZES: (32, 64, 128, 256, 512)
+    ANCHOR_STRIDES: (8, 16, 32, 64, 128)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BBOX_REG_BETA: 0.11
+    BBOX_REG_WEIGHT: 4.0
+    BG_IOU_THRESHOLD: 0.4
+    FG_IOU_THRESHOLD: 0.5
+    INFERENCE_TH: 0.05
+    LOSS_ALPHA: 0.25
+    LOSS_GAMMA: 2.0
+    NMS_TH: 0.4
+    NUM_CLASSES: 81
+    NUM_CONVS: 4
+    OCTAVE: 2.0
+    PRE_NMS_TOP_N: 1000
+    PRIOR_PROB: 0.01
+    SCALES_PER_OCTAVE: 3
+    STRADDLE_THRESH: 0
+    USE_C5: True
+  RETINANET_ON: False
+  ROI_BOX_HEAD:
+    CONV_HEAD_DIM: 256
+    DILATION: 1
+    FEATURE_EXTRACTOR: FBNet.roi_head
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 11
+    NUM_STACKED_CONVS: 4
+    POOLER_RESOLUTION: 6
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: FastRCNNPredictor
+    USE_GN: False
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+    BBOX_REG_WEIGHTS: (10.0, 10.0, 5.0, 5.0)
+    BG_IOU_THRESHOLD: 0.5
+    DETECTIONS_PER_IMG: 100
+    FG_IOU_THRESHOLD: 0.5
+    NMS: 0.5
+    POSITIVE_FRACTION: 0.25
+    SCORE_THRESH: 0.05
+    USE_FPN: False
+  ROI_KEYPOINT_HEAD:
+    CONV_LAYERS: (512, 512, 512, 512, 512, 512, 512, 512)
+    FEATURE_EXTRACTOR: KeypointRCNNFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 17
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    PREDICTOR: KeypointRCNNPredictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+  ROI_MASK_HEAD:
+    CONV_LAYERS: (256, 256, 256, 256)
+    DILATION: 1
+    FEATURE_EXTRACTOR: ResNet50Conv5ROIFeatureExtractor
+    MLP_HEAD_DIM: 1024
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALES: (0.0625,)
+    POSTPROCESS_MASKS: False
+    POSTPROCESS_MASKS_THRESHOLD: 0.5
+    PREDICTOR: MaskRCNNC4Predictor
+    RESOLUTION: 14
+    SHARE_BOX_FEATURE_EXTRACTOR: True
+    USE_GN: False
+  RPN:
+    ANCHOR_SIZES: (16, 32, 64, 128, 256)
+    ANCHOR_STRIDE: (16,)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BATCH_SIZE_PER_IMAGE: 256
+    BG_IOU_THRESHOLD: 0.3
+    FG_IOU_THRESHOLD: 0.7
+    FPN_POST_NMS_PER_BATCH: True
+    FPN_POST_NMS_TOP_N_TEST: 2000
+    FPN_POST_NMS_TOP_N_TRAIN: 2000
+    MIN_SIZE: 0
+    NMS_THRESH: 0.7
+    POSITIVE_FRACTION: 0.5
+    POST_NMS_TOP_N_TEST: 100
+    POST_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 6000
+    PRE_NMS_TOP_N_TRAIN: 6000
+    RPN_HEAD: FBNet.rpn_head
+    STRADDLE_THRESH: 0
+    USE_FPN: False
+  RPN_ONLY: False
+  WEIGHT: 
+OUTPUT_DIR: .
+PATHS_CATALOG: /mnt/rscratch1/tyz/maskrcnn-benchmark/maskrcnn_benchmark/config/paths_catalog.py
+SOLVER:
+  BASE_LR: 0.06
+  BIAS_LR_FACTOR: 2
+  CHECKPOINT_PERIOD: 2500
+  GAMMA: 0.1
+  IMS_PER_BATCH: 128
+  MAX_ITER: 90000
+  MOMENTUM: 0.9
+  STEPS: (60000, 90000)
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 500
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0001
+  WEIGHT_DECAY_BIAS: 0
+TEST:
+  BBOX_AUG:
+    ENABLED: False
+    H_FLIP: False
+    MAX_SIZE: 4000
+    SCALES: ()
+    SCALE_H_FLIP: False
+  DETECTIONS_PER_IMG: 100
+  EXPECTED_RESULTS: []
+  EXPECTED_RESULTS_SIGMA_TOL: 4
+  IMS_PER_BATCH: 8
+2019-08-05 10:08:46,812 maskrcnn_benchmark INFO: Saving config into: ./config.yml
+2019-08-05 10:08:46,849 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:08:46,905 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:08:46,915 maskrcnn_benchmark.modeling.backbone.fbnet INFO: Building fbnet model with arch default (without scaling):
+{'first': [32, 2], 'stages': [{'stage_idx': 0, 'block_idx': 0, 'block': [1, 16, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 0, 'block': [6, 24, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 1, 'block_idx': 1, 'block': [6, 24, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 0, 'block': [6, 32, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 1, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 2, 'block_idx': 2, 'block': [6, 32, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 0, 'block': [6, 64, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 1, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 2, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 3, 'block': [6, 64, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 4, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 5, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 3, 'block_idx': 6, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 0, 'block': [4, 160, 1, 2], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 4, 'block_idx': 3, 'block': [6, 240, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 0, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 1, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 5, 'block_idx': 2, 'block': [6, 96, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 0, 'block': [4, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 1, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 2, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 3, 'block': [6, 160, 1, 1], 'block_op_type': 'ir_k3'}, {'stage_idx': 6, 'block_idx': 4, 'block': [3, 80, 1, -2], 'block_op_type': 'ir_k3'}], 'last': [0, 0.0], 'backbone': [0, 1, 2, 3], 'rpn': [5], 'bbox': [4], 'mask': [6]}
+2019-08-05 10:08:47,006 maskrcnn_benchmark.utils.checkpoint INFO: No checkpoint found. Initializing model from scratch
+2019-08-05 10:08:47,006 maskrcnn_benchmark.data.build WARNING: When using more than one image per GPU you may encounter an out-of-memory (OOM) error if your GPU does not have sufficient memory. If this happens, you can reduce SOLVER.IMS_PER_BATCH (for training) or TEST.IMS_PER_BATCH (for inference). For training, you must also adjust the learning rate and schedule length according to the linear scaling rule. See for example: https://github.com/facebookresearch/Detectron/blob/master/configs/getting_started/tutorial_1gpu_e2e_faster_rcnn_R-50-FPN.yaml#L14
+2019-08-05 10:08:59,416 maskrcnn_benchmark.utils.miscellaneous INFO: Saving labels mapping into ./labels.json
+2019-08-05 10:08:59,519 maskrcnn_benchmark.trainer INFO: Start training
+2019-08-05 10:09:14,707 maskrcnn_benchmark.trainer INFO: eta: 18:53:37  iter: 20  loss: 2.7832 (2.7596)  loss_box_reg: 0.0546 (0.0554)  loss_classifier: 1.9653 (1.9381)  loss_objectness: 0.6833 (0.6812)  loss_rpn_box_reg: 0.0836 (0.0848)  time: 0.6466 (0.7559)  data: 0.1219 (0.1995)  lr: 0.008052  max mem: 6921
