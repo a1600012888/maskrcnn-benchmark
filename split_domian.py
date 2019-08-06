@@ -21,7 +21,7 @@ Scenes = ['residential', 'highway', 'city street', 'parking lot', 'gas stations'
 TimeofDays = ['dawn/dusk', 'daytime', 'night', 'undefined']
 
 
-save_dir = '/rscratch/data/bdd100k/domain_embedding'
+save_dir = '/rscratch/data/bdd100k/domain_embedding_val_new'
 
 name2domain = {}
 
@@ -119,10 +119,14 @@ if __name__ == '__main__':
 
     embedding_dic = {i:0 for i in range(len(Weathers)*len(Scenes)*len(TimeofDays))}
 
-    run_one_epoch(net, dl_train, embedding_dic, Domains)
-    #run_one_epoch(net, dl_train, embedding_dic)
-
-
+    run_one_epoch(net, dl_val, embedding_dic, Domains)
+    # run_one_epoch(net, dl_train, embedding_dic)
+    
+    a = 0
+    for i in range(len(Domains)):
+        a = a + embedding_dic[i]
+    a = a / len(dl_val)
+    a = a.numpy()
     for i in range(len(Domains)):
         dic = Domains[i]
         #print(dic['num'])
@@ -133,7 +137,8 @@ if __name__ == '__main__':
             embedding_dic[i] = embedding_dic[i].numpy()
             domain_idx = i
             save_path = os.path.join(save_dir, str(domain_idx) + '.txt')
-            np.savetxt(save_path, embedding_dic[i])
+            np.savetxt(save_path, a)
+            #np.savetxt(save_path, embedding_dic[i])
         #print(num, embedding_dic[i])
 
     # for domain_idx, vec in embedding_dic.items():

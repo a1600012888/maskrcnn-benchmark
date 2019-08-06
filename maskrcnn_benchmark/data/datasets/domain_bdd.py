@@ -143,7 +143,8 @@ class DomainDataset(DomainCocoDetection):
             img, target = self._transforms(img, target)
         #print(vec, idx)
         #return img, target, idx, vec
-        return img, target, vec
+        #print(idx, vec)
+        return img, target, idx, vec
 
     def get_img_info(self, index):
         img_id = self.id_to_img_map[index]

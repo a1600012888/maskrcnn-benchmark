@@ -57,8 +57,10 @@ class GeneralizedRCNN(nn.Module):
         images = to_image_list(images)
         if self.DOMAIN_SCC:
             embedding = torch.stack(embedding, 0)
+            embedding = embedding.to(images.tensors.get_device())
+            #print(embedding.type())
+            embedding = embedding.type(torch.float)
             self.backbone.embedding_vec = embedding
-            #embedding = embedding.to(images.tensors.get_device())
             #features = self.backbone(images.tensors, embedding)
 
         features = self.backbone(images.tensors)
