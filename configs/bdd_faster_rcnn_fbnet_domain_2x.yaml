@@ -1,5 +1,5 @@
 MODEL:
-    # WEIGHT: '/rscratch/zhendong/tyz/maskrcnn-benchmark/results/fbnet-bdd-1x-no-pretrain/weight-50000.pth'
+  WEIGHT: '/rscratch/zhendong/tyz/maskrcnn-benchmark/model_0070000.pth'
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
     CONV_BODY: FBNet

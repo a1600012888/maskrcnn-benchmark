@@ -1,4 +1,6 @@
+OUTPUT_DIR: './results/fbnet-1x/'
 MODEL:
+  WEIGHT: '/rscratch/zhendong/tyz/models/fbnet-160.pth'
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
     CONV_BODY: FBNet

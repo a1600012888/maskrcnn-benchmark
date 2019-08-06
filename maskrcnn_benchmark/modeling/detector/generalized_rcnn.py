@@ -49,13 +49,14 @@ class GeneralizedRCNN(nn.Module):
 
         """
 
-        embedding = torch.stack(embedding, 0)
+
         #print(embedding.size(), 'em')
         #print(_, '_')
         if self.training and targets is None:
             raise ValueError("In training mode, targets should be passed")
         images = to_image_list(images)
         if self.DOMAIN_SCC:
+            embedding = torch.stack(embedding, 0)
             self.backbone.embedding_vec = embedding
             #embedding = embedding.to(images.tensors.get_device())
             #features = self.backbone(images.tensors, embedding)
