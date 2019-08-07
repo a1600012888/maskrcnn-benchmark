@@ -21,17 +21,18 @@ Scenes = ['residential', 'highway', 'city street', 'parking lot', 'gas stations'
 TimeofDays = ['dawn/dusk', 'daytime', 'night', 'undefined']
 
 
-save_dir = '/rscratch/data/bdd100k/domain_embedding_val_new'
+save_dir = '/rscratch/data/bdd100k/domain_embedding_val_weather'
 
 name2domain = {}
+
 
 def get_domain_idx(attributes:dict, Domains) -> int:
 
     weather, scene, timeofday = attributes['weather'], attributes['scene'], attributes['timeofday']
 
-    w, s, t = Weathers.index(weather), Scenes.index(scene), TimeofDays.index(timeofday)
+    w, s, t = Weathers.index(weather), Scenenights.index(scene), TimeofDays.index(timeofday)
 
-    domain_idx = w * len(Scenes) * len(TimeofDays) + s * len(TimeofDays) + t
+    domain_idx = w
 
     # Do not access objects in multi-processing. It is forked!!!
     # print(Domains[domain_idx]['num'])
@@ -122,16 +123,11 @@ if __name__ == '__main__':
     run_one_epoch(net, dl_val, embedding_dic, Domains)
     # run_one_epoch(net, dl_train, embedding_dic)
     
-    a = 0
-    tnum = 0 
-    for i in range(len(Domains)):
-        a = a + embedding_dic[i]
-        dic = Domains[i]
-        tnum = tnum + dic['num']
-    #a = a / len(dl_val)
-    a = a / (tnum * 1.0)
-    print(tnum, len(dl_val))
-    a = a.numpy()
+    # a = 0
+    # for i in range(len(Domains)):
+    #     a = a + embedding_dic[i]
+    # a = a / len(dl_val)
+    # a = a.numpy()
     for i in range(len(Domains)):
         dic = Domains[i]
         #print(dic['num'])
@@ -142,8 +138,8 @@ if __name__ == '__main__':
             embedding_dic[i] = embedding_dic[i].numpy()
             domain_idx = i
             save_path = os.path.join(save_dir, str(domain_idx) + '.txt')
-            np.savetxt(save_path, a)
-            #np.savetxt(save_path, embedding_dic[i])
+            # np.savetxt(save_path, a)
+            np.savetxt(save_path, embedding_dic[i])
         #print(num, embedding_dic[i])
 
     # for domain_idx, vec in embedding_dic.items():

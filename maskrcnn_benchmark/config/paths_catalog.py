@@ -13,6 +13,9 @@ class DatasetCatalog(object):
             'embedding_dir': 'bdd100k/domain_embedding',
         },
         "domain_bdd100k_cocofmt_val": {
+            #"img_dir": "bdd100k/train",
+            #"ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json",
+            #'embedding_dir': 'bdd100k/domain_embedding',
             "img_dir": "bdd100k/val",
             "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_val.json",
             'embedding_dir': 'bdd100k/domain_embedding_val',
