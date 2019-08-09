@@ -1,8 +1,10 @@
-OUTPUT_DIR: './results/fbnet-1x.0.2/'
+OUTPUT_DIR: './results/fbnet-scc.time.1x/'
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
     CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    NUM_EXPERTS: 4
   FBNET:
     ARCH: "default"
     BN_TYPE: "bn"
@@ -27,17 +29,18 @@ MODEL:
 # DATALOADER:
 #   NUM_WORKERS: 2
 DATASETS:
-  TRAIN: ("bdd100k_cocofmt_train",)
-  TEST: ("bdd100k_cocofmt_val",)
+  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  TEST: ("domain_bdd100k_cocofmt_val",)
 SOLVER:
-  BASE_LR: 0.02
+  BASE_LR: 0.06
+  #BASE_LR: 0.06
   WARMUP_FACTOR: 0.1
   WEIGHT_DECAY: 0.0001
-  STEPS: (40000, 50000)
-  MAX_ITER: 55000
-  IMS_PER_BATCH: 128  # for 8GPUs
-# TEST:
-#   IMS_PER_BATCH: 8
+  STEPS: (60000, 80000)
+  MAX_ITER: 90000
+  IMS_PER_BATCH: 128  # 128  # for 8GPUs
+TEST:
+  IMS_PER_BATCH: 8
 INPUT:
   MIN_SIZE_TRAIN: (320, )
   MAX_SIZE_TRAIN: 640
