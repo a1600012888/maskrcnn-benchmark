@@ -209,9 +209,9 @@ MODEL:
     STRADDLE_THRESH: 0
     USE_FPN: false
   RPN_ONLY: false
-  WEIGHT: /rscratch/zhendong/tyz/models/fbnet-160.pth
+  WEIGHT: ''
 OUTPUT_DIR: ./results/fbnet-1x.0.2/
-PATHS_CATALOG: /rscratch/zhendong/tyz/maskrcnn-benchmark/maskrcnn_benchmark/config/paths_catalog.py
+PATHS_CATALOG: /rscratch/tyz/maskrcnn-benchmark/maskrcnn_benchmark/config/paths_catalog.py
 SOLVER:
   BASE_LR: 0.02
   BIAS_LR_FACTOR: 2
