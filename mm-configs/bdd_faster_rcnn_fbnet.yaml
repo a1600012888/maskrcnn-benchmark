@@ -1,4 +1,6 @@
+OUTPUT_DIR: './results/mm/fbnet-1x.0.2/'
 MODEL:
+  WEIGHT: '/rscratch/tyz/models/fbnet-160.pth'
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
     CONV_BODY: FBNet
@@ -29,15 +31,14 @@ DATASETS:
   TRAIN: ("bdd100k_cocofmt_train",)
   TEST: ("bdd100k_cocofmt_val",)
 SOLVER:
-  BASE_LR: 0.12
-  #BASE_LR: 0.06
+  BASE_LR: 0.02
   WARMUP_FACTOR: 0.1
   WEIGHT_DECAY: 0.0001
-  STEPS: (35000, 45000)
-  MAX_ITER: 50000
-  IMS_PER_BATCH: 256  # for 8GPUs
-TEST:
-  IMS_PER_BATCH: 16
+  STEPS: (60000, 80000)
+  MAX_ITER: 90000
+  IMS_PER_BATCH: 64  # for 8GPUs
+# TEST:
+#   IMS_PER_BATCH: 8
 INPUT:
   MIN_SIZE_TRAIN: (320, )
   MAX_SIZE_TRAIN: 640
