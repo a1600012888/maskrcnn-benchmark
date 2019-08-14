@@ -7,6 +7,13 @@ import os
 class DatasetCatalog(object):
     DATA_DIR = "datasets"
     DATASETS = {
+        "embed_jitter_domain_bdd100k_cocofmt_train": {
+            "img_dir": "bdd100k/train",
+            "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json",
+            'embedding_dir': 'bdd100k/domain_embedding',
+            'jitter_range': 0.3,
+            'raw_embedding_dir': 'bdd100k/raw_domain_embedding',
+        },
         "domain_bdd100k_cocofmt_train": {
             "img_dir": "bdd100k/train",
             "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json",
@@ -27,6 +34,8 @@ class DatasetCatalog(object):
         "bdd100k_cocofmt_val": {
             "img_dir": "bdd100k/val",
             "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_val.json"
+            #"img_dir": "bdd100k/train",
+            #"ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json"
         },
         "coco_2017_train": {
             "img_dir": "coco/train2017",
@@ -139,6 +148,15 @@ class DatasetCatalog(object):
             )
             if 'domain' in name:
                 args['embedding_dir'] = os.path.join(data_dir, attrs['embedding_dir'])
+
+                if 'embed_jitter' in name:
+                    args['raw_embedding_dir'] = os.path.join(data_dir, attrs['raw_embedding_dir'])
+                    args['jitter_range'] = attrs['jitter_range']
+                    return dict(
+                        factory="EmbedJitterDomainDataset",
+                        args=args,
+                    )
+
                 return dict(
                     factory="DomainDataset",
                     args=args,

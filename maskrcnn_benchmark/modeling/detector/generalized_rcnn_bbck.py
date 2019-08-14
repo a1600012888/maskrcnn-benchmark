@@ -5,6 +5,8 @@ Implements the Generalized R-CNN framework
 
 import torch
 from torch import nn
+import os
+import numpy as np
 
 from maskrcnn_benchmark.structures.image_list import to_image_list
 
@@ -28,6 +30,20 @@ class GeneralizedRCNN(nn.Module):
 
         self.backbone = build_backbone(cfg)
         self.DOMAIN_SCC = cfg.MODEL.BACKBONE.DOMAIN_SCC
+
+        if self.DOMAIN_SCC and os.path.exists(cfg.MODEL.BACKBONE.BEST_SCC_DIR):
+            self.DOMAIN_SCC_BEST_DIR = cfg.MODEL.BACKBONE.BEST_SCC_DIR
+            self.DOMAIN_SCC_BEST = True
+            all_embedings_names = [a for a in os.listdir(self.DOMAIN_SCC_BEST_DIR) if a.endswith('.txt')]
+            self.embeddings = []
+            for name in all_embedings_names:
+                p = os.path.join(self.DOMAIN_SCC_BEST_DIR, name)
+                embedding = np.loadtxt(p)
+                embedding = torch.tensor(embedding).float()
+                self.embeddings.append(embedding)
+        else:
+            self.DOMAIN_SCC_BEST = False
+
         if self.DOMAIN_SCC:
             from tylib.tytorch.layers.domain_scc_modifier import Conv2DScc
             Conv2DScc(self.backbone, cfg.MODEL.BACKBONE.NUM_EXPERTS,
@@ -54,6 +70,10 @@ class GeneralizedRCNN(nn.Module):
         #print(_, '_')
         if self.training and targets is None:
             raise ValueError("In training mode, targets should be passed")
+        if self.DOMAIN_SCC_BEST:
+            with torch.no_grad():
+            for embed in self.embeddings:
+                pass
         images = to_image_list(images)
         if self.DOMAIN_SCC:
             embedding = torch.stack(embedding, 0)
