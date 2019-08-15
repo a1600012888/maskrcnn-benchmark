@@ -7,7 +7,7 @@ DATASETS:
   TEST:
   - domain_bdd100k_cocofmt_val
   TRAIN:
-  - domain_bdd100k_cocofmt_train
+  - embed_jitter_domain_bdd100k_cocofmt_train
 DTYPE: float32
 INPUT:
   BRIGHTNESS: 0.0
@@ -31,6 +31,7 @@ INPUT:
   VERTICAL_FLIP_PROB_TRAIN: 0.0
 MODEL:
   BACKBONE:
+    BEST_SCC_DIR: ''
     CONV_BODY: FBNet
     DOMAIN_SCC: true
     FREEZE_CONV_BODY_AT: 2
@@ -209,11 +210,11 @@ MODEL:
     STRADDLE_THRESH: 0
     USE_FPN: false
   RPN_ONLY: false
-  WEIGHT: /rscratch/zhendong/tyz/maskrcnn-benchmark/model_0070000.pth
+  WEIGHT: ''
 OUTPUT_DIR: .
 PATHS_CATALOG: /rscratch/zhendong/tyz/maskrcnn-benchmark/maskrcnn_benchmark/config/paths_catalog.py
 SOLVER:
-  BASE_LR: 0.06
+  BASE_LR: 0.12
   BIAS_LR_FACTOR: 2
   CHECKPOINT_PERIOD: 2500
   GAMMA: 0.1
@@ -224,7 +225,7 @@ SOLVER:
   - 60000
   - 80000
   WARMUP_FACTOR: 0.1
-  WARMUP_ITERS: 500
+  WARMUP_ITERS: 1000
   WARMUP_METHOD: linear
   WEIGHT_DECAY: 0.0001
   WEIGHT_DECAY_BIAS: 0

@@ -21,7 +21,7 @@ Scenes = ['residential', 'highway', 'city street', 'parking lot', 'gas stations'
 TimeofDays = ['dawn/dusk', 'daytime', 'night', 'undefined']
 
 
-save_dir = '/rscratch/data/bdd100k/domain_embedding_val_single'
+save_dir = '/rscratch/data/bdd100k/domain_embedding_train_single'
 
 if not os.path.exists(save_dir):
     os.mkdir(save_dir)
@@ -94,7 +94,7 @@ def run_one_epoch(net, dl, embedding_dic, Domains):
 
 if __name__ == '__main__':
     Domains = []
-    for i in range(10001):
+    for i in range(70001):
         Domains.append({'name': i, 'num': 0})
 
     #for w in Weathers:
@@ -121,9 +121,9 @@ if __name__ == '__main__':
     dl_train = torch.utils.data.DataLoader(ds_train, batch_size=64, num_workers=1)
     dl_val = torch.utils.data.DataLoader(ds_val, batch_size=64, num_workers=1)
 
-    embedding_dic = {i:0 for i in range(10001)}
+    embedding_dic = {i:0 for i in range(70001)}
 
-    run_one_epoch(net, dl_val, embedding_dic, Domains)
+    run_one_epoch(net, dl_train, embedding_dic, Domains)
     # run_one_epoch(net, dl_train, embedding_dic)
     
 

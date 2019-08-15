@@ -81,8 +81,8 @@ class DomainCocoDetection(torchvision.datasets.coco.CocoDetection):
 
         vec = np.loadtxt(os.path.join(self.embedding_dir, '{}.txt'.format(domain_idx)))
         raw_vec = np.loadtxt(os.path.join(self.raw_embedding_dir, '{}.txt'.format(raw_vec_idx)))
-        vec = torch.tensor(vec)
-        raw_vec = torch.tensor(vec)
+        vec = torch.tensor(vec).float()
+        raw_vec = torch.tensor(raw_vec).float()
         alpha = torch.rand(1) * self.jitter_range
         vec = raw_vec * alpha + vec * (1 - alpha)
         img = Image.open(os.path.join(self.root, path)).convert('RGB')
@@ -126,7 +126,7 @@ class EmbedJitterDomainDataset(DomainCocoDetection):
         self._transforms = transforms
 
     def __getitem__(self, idx):
-        img, anno, vec = super(DomainDataset, self).__getitem__(idx)
+        img, anno, vec = super(EmbedJitterDomainDataset, self).__getitem__(idx)
 
         # filter crowd annotations
         # TODO might be better to add an extra field

@@ -1,3 +1,4 @@
+OUTPUT_DIR: './results/embed/time_lr2x'
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
