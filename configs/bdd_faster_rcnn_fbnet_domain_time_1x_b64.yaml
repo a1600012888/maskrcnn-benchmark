@@ -1,4 +1,4 @@
-OUTPUT_DIR: './results/fbnet-scc.time.1x_b64/'
+OUTPUT_DIR: './results/test/fbnet-scc.time.1x_b64/'
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
