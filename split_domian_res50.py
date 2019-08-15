@@ -21,22 +21,25 @@ Scenes = ['residential', 'highway', 'city street', 'parking lot', 'gas stations'
 TimeofDays = ['dawn/dusk', 'daytime', 'night', 'undefined']
 
 
-save_dir = '/rscratch/data/bdd100k/domain_embedding_val_time'
+save_dir = '/rscratch/data/bdd100k/domain_embedding_res50'
 
 name2domain = {}
 
-def get_domain_idx(attributes:dict, Domains) -> int:
+def get_domain_idx(img, cls_net) -> int:
 
-    weather, scene, timeofday = attributes['weather'], attributes['scene'], attributes['timeofday']
+    # weather, scene, timeofday = attributes['weather'], attributes['scene'], attributes['timeofday']
 
-    w, s, t = Weathers.index(weather), Scenes.index(scene), TimeofDays.index(timeofday)
+    # w, s, t = Weathers.index(weather), Scenes.index(scene), TimeofDays.index(timeofday)
 
-    #domain_idx = w * len(Scenes) * len(TimeofDays) + s * len(TimeofDays) + t
-    domain_idx = t
+    # domain_idx = w * len(Scenes) * len(TimeofDays) + s * len(TimeofDays) + t
+    inp = torch.unsqueeze(img, dim=0)
 
-    # Do not access objects in multi-processing. It is forked!!!
-    # print(Domains[domain_idx]['num'])
-    # Domains[domain_idx]['num'] = Domains[domain_idx]['num'] + 1
+    inp = inp.cuda()
+    pred = cls_net(inp)
+    domain_idx = torch.argmax(pred)
+    domain_idx = domain_idx.cpu()
+    domain_idx = int(domain_idx)
+    print(domain_idx)
 
     return domain_idx
 
@@ -54,11 +57,12 @@ def pil_loader(path):
 
 class BddDataset(torch.utils.data.Dataset):
 
-    def __init__(self, ann_path, img_dir, transform, Domains):
+    def __init__(self, ann_path, img_dir, transform, Domains, cls_net):
         self.anns = read_bdd_labels(ann_path)
         self.img_dir = img_dir
         self.transform = transform
         self.Domains = Domains
+        self.cls_net = cls_net
 
     def __len__(self):
         return len(self.anns)
@@ -70,21 +74,29 @@ class BddDataset(torch.utils.data.Dataset):
         img = pil_loader(img_path)
 
         img_tensor = self.transform(img)
-        domain_idx = get_domain_idx(ann['attributes'], self.Domains)
+        #domain_idx = get_domain_idx(img_tensor, cls_net)
 
         #name2domain[img_name] = domain_idx
-        return img_tensor, domain_idx, img_name
+        #return img_tensor, #omain_idx, img_name
 
-def run_one_epoch(net, dl, embedding_dic, Domains):
+        return img_tensor, img_name
+
+def run_one_epoch(net, dl, embedding_dic, Domains, cls_net):
+    net.eval()
+    cls_net.eval()
     with torch.no_grad():
         pbar = tqdm(dl)
-        for i, (data, domain_idxs, img_names) in enumerate(pbar):
+        for i, (data, img_names) in enumerate(pbar):
             data = data.cuda()
+            pred = cls_net(data)
+            indxs = torch.argmax(pred, 1)
+            domain_idxs = indxs.cpu()
             vectors = net(data)
             vectors = vectors.cpu()
             for vec, domain_idx, name in zip(vectors, domain_idxs, img_names):
                 name = str(name)
                 #print(name)
+                #print(domain_idx)
                 domain_idx = int(domain_idx)
                 Domains[domain_idx]['num'] += 1
                 name2domain[name] = domain_idx
@@ -100,8 +112,16 @@ if __name__ == '__main__':
                 Domains.append({'name': w + s + t, 'num': 0})
 
     net = torchvision.models.resnet50(pretrained=True)
+    net.fc = torch.nn.Linear(2048, 200)
+    net.load_state_dict(torch.load('../models/attr-cls-res50.pth')['model'])
+    import copy
+
+    cls_net = copy.deepcopy(net)
     net.fc = Identity
+    cls_net.cuda()
     net.cuda()
+    net.eval()
+    cls_net.eval()
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
 
@@ -112,17 +132,18 @@ if __name__ == '__main__':
         normalize,
     ])
 
-    ds_train = BddDataset(bdd_train_label_path, train_dir, data_transform, Domains)
-    ds_val = BddDataset(bdd_val_label_path, val_dir, data_transform, Domains)
+    ds_train = BddDataset(bdd_train_label_path, train_dir, data_transform, Domains, cls_net)
+    ds_val = BddDataset(bdd_val_label_path, val_dir, data_transform, Domains, cls_net)
 
     dl_train = torch.utils.data.DataLoader(ds_train, batch_size=64, num_workers=8)
     dl_val = torch.utils.data.DataLoader(ds_val, batch_size=64, num_workers=8)
 
     embedding_dic = {i:0 for i in range(len(Weathers)*len(Scenes)*len(TimeofDays))}
 
-    run_one_epoch(net, dl_val, embedding_dic, Domains)
+    run_one_epoch(net, dl_val, embedding_dic, Domains, cls_net)
     # run_one_epoch(net, dl_train, embedding_dic)
-
+    
+    
     for i in range(len(Domains)):
         dic = Domains[i]
         #print(dic['num'])
@@ -133,6 +154,7 @@ if __name__ == '__main__':
             embedding_dic[i] = embedding_dic[i].numpy()
             domain_idx = i
             save_path = os.path.join(save_dir, str(domain_idx) + '.txt')
+            #np.savetxt(save_path, a)
             np.savetxt(save_path, embedding_dic[i])
         #print(num, embedding_dic[i])
 

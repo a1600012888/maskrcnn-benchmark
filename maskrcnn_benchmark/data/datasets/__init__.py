@@ -3,5 +3,7 @@ from .coco import COCODataset
 from .voc import PascalVOCDataset
 from .concat_dataset import ConcatDataset
 from .domain_bdd import DomainDataset
+from .embed_jitter_domain_bdd import EmbedJitterDomainDataset
 
-__all__ = ["COCODataset", "ConcatDataset", "PascalVOCDataset", 'DomainDataset']
+__all__ = ["COCODataset", "ConcatDataset", "PascalVOCDataset",
+           'DomainDataset', 'EmbedJitterDomainDataset']
