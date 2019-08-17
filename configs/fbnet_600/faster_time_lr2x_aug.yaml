@@ -1,8 +1,10 @@
-OUTPUT_DIR: 'results/bdd_fb600_lr2x_aug'
+OUTPUT_DIR: 'results/bdd_fb600_time_lr2x_aug'
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
     CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    NUM_EXPERTS: 4 
   FBNET:
     ARCH: "default"
     BN_TYPE: "bn"
@@ -25,8 +27,8 @@ MODEL:
     FEATURE_EXTRACTOR: FBNet.roi_head
     NUM_CLASSES: 11
 DATASETS:
-  TRAIN: ("bdd100k_cocofmt_train", )
-  TEST: ("bdd100k_cocofmt_val",)
+  TRAIN: ("domain_bdd100k_cocofmt_train", )
+  TEST: ("domain_bdd100k_cocofmt_val",)
 SOLVER:
   BASE_LR: 0.12
   WARMUP_FACTOR: 0.1
