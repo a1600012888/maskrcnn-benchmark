@@ -19,10 +19,24 @@ class DatasetCatalog(object):
             "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json",
             'embedding_dir': 'bdd100k/domain_cluster',
         },
+
         "domain_cluster_bdd100k_cocofmt_val": {
             "img_dir": "bdd100k/val",
             "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_val.json",
             'embedding_dir': 'bdd100k/domain_cluster_val',
+        },
+        "domain_single_bdd100k_cocofmt_train": {
+            "img_dir": "bdd100k/train",
+            "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json",
+            'embedding_dir': 'bdd100k/domain_embedding_single',
+        },
+        "domain_single_bdd100k_cocofmt_val": {
+            # "img_dir": "bdd100k/train",
+            # "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json",
+            # 'embedding_dir': 'bdd100k/domain_embedding',
+            "img_dir": "bdd100k/val",
+            "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_val.json",
+            'embedding_dir': 'bdd100k/domain_embedding_val_single',
         },
         "domain_bdd100k_cocofmt_train": {
             "img_dir": "bdd100k/train",
@@ -36,7 +50,7 @@ class DatasetCatalog(object):
             "img_dir": "bdd100k/val",
             "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_val.json",
             'embedding_dir': 'bdd100k/domain_embedding_val',
-    },
+        },
         "bdd100k_cocofmt_train": {
             "img_dir": "bdd100k/train",
             "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json"
