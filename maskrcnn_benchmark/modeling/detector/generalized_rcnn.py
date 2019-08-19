@@ -28,10 +28,23 @@ class GeneralizedRCNN(nn.Module):
 
         self.backbone = build_backbone(cfg)
         self.DOMAIN_SCC = cfg.MODEL.BACKBONE.DOMAIN_SCC
+        self.SCC_DIVERSE_REG = cfg.MODEL.BACKBONE.SCC_DIVERSE_REG
+
         if self.DOMAIN_SCC:
-            from tylib.tytorch.layers.domain_scc_modifier import Conv2DScc
-            Conv2DScc(self.backbone, cfg.MODEL.BACKBONE.NUM_EXPERTS,
-                      cfg.MODEL.BACKBONE.IN_NUM)
+            if self.SCC_DIVERSE_REG:
+                from tylib.tytorch.layers.diverse_reg_domain_scc_modifier import Conv2DScc
+                alpha = cfg.MODEL.SCC.REG_LOSS.ALPHA
+                beta = cfg.MODEL.SCC.REG_LOSS.BETA
+                lamda = cfg.MODEL.SCC.REG_LOSS.LAMBDA
+
+                Conv2DScc(self.backbone, alpha, beta, lamda,
+                          cfg.MODEL.BACKBONE.NUM_EXPERTS,
+                          cfg.MODEL.BACKBONE.IN_NUM)
+            else:
+                from tylib.tytorch.layers.domain_scc_modifier import Conv2DScc
+
+                Conv2DScc(self.backbone, cfg.MODEL.BACKBONE.NUM_EXPERTS,
+                          cfg.MODEL.BACKBONE.IN_NUM)
         self.rpn = build_rpn(cfg, self.backbone.out_channels)
         self.roi_heads = build_roi_heads(cfg, self.backbone.out_channels)
 

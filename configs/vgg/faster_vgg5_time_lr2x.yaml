@@ -1,7 +1,8 @@
-OUTPUT_DIR: './results/fbnet-scc.single.1x/'
+OUTPUT_DIR: './results/fbnet-scc,time_vgg5/'
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
+    IN_NUM: 512
     CONV_BODY: FBNet
     DOMAIN_SCC: True
     NUM_EXPERTS: 4

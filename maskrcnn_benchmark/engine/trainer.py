@@ -85,6 +85,11 @@ def do_train(
             scaled_losses.backward()
         optimizer.step()
 
+        for n, p in model.named_parameters():
+            #print(n)
+            if n.find('routing_fc.weight') != -1:
+                #print(p.grad.sum())
+                pass
         batch_time = time.time() - end
         end = time.time()
         meters.update(time=batch_time, data=data_time)

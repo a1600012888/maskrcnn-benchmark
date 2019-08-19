@@ -1,7 +1,8 @@
-OUTPUT_DIR: './results/fbnet-scc.single.1x/'
+OUTPUT_DIR: './results/vgg2_faster_time_lr2x/'
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
+    IN_NUM: 128
     CONV_BODY: FBNet
     DOMAIN_SCC: True
     NUM_EXPERTS: 4
@@ -29,9 +30,8 @@ MODEL:
 # DATALOADER:
 #   NUM_WORKERS: 2
 DATASETS:
-  TRAIN: ("domain_single_bdd100k_cocofmt_train",)
-  #TEST: ("domain_single_bdd100k_cocofmt_train",)
-  TEST: ("domain_single_bdd100k_cocofmt_val",)
+  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  TEST: ("domain_bdd100k_cocofmt_val",)
 SOLVER:
   BASE_LR: 0.12
   #BASE_LR: 0.06
