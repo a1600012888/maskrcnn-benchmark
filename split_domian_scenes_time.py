@@ -21,7 +21,7 @@ Scenes = ['residential', 'highway', 'city street', 'parking lot', 'gas stations'
 TimeofDays = ['dawn/dusk', 'daytime', 'night', 'undefined']
 
 
-save_dir = '/rscratch/data/bdd100k/domain_embedding_val_weather'
+save_dir = '/rscratch/data/bdd100k/domain_embedding_val_scenes_time'
 
 if not os.path.exists(save_dir):
     os.mkdir(save_dir)
@@ -34,7 +34,7 @@ def get_domain_idx(attributes:dict, Domains) -> int:
     w, s, t = Weathers.index(weather), Scenes.index(scene), TimeofDays.index(timeofday)
 
     #domain_idx = w * len(Scenes) * len(TimeofDays) + s * len(TimeofDays) + t
-    domain_idx = w
+    domain_idx = s * len(TimeofDays) + t
 
     # Do not access objects in multi-processing. It is forked!!!
     # print(Domains[domain_idx]['num'])

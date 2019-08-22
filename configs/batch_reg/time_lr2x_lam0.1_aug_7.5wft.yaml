@@ -1,8 +1,17 @@
-OUTPUT_DIR: './results/fbnet-bdd-lr2x-aug2'
+OUTPUT_DIR: './results/batch_reg/time.lr2x.lam0.1_aug_7.5wft/'
 MODEL:
+  WEIGHT: '../models/7.5w.pth'
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
     CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    NUM_EXPERTS: 4
+    SCC_DIVERSE_REG: False
+  SCC:
+    REG_LOSS: 
+      ALPHA: 0.6
+      BETA: 0.4
+      LAMBDA: 0.1
   FBNET:
     ARCH: "default"
     BN_TYPE: "bn"
@@ -27,24 +36,26 @@ MODEL:
 # DATALOADER:
 #   NUM_WORKERS: 2
 DATASETS:
-  TRAIN: ("bdd100k_cocofmt_train",)
-  TEST: ("bdd100k_cocofmt_train",)
-  #TEST: ("bdd100k_cocofmt_val",)
+  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  TEST: ("domain_bdd100k_cocofmt_train",)
+  #TEST: ("domain_bdd100k_cocofmt_val",)
 SOLVER:
-  BASE_LR: 0.24
+  BASE_LR: 0.012
+  #BASE_LR: 0.06
   WARMUP_FACTOR: 0.1
   WEIGHT_DECAY: 0.0001
-  STEPS: (30000, 40000)
-  MAX_ITER: 45000
-  IMS_PER_BATCH: 256  # for 8GPUs
-# TEST:
-#   IMS_PER_BATCH: 8
+  STEPS: (5000, )
+  MAX_ITER: 15000
+  IMS_PER_BATCH: 128  # 128  # for 8GPUs
+TEST:
+  IMS_PER_BATCH: 8
 INPUT:
-  BRIGHTNESS: 0.4 
+  BRIGHTNESS: 0.4
   CONTRAST: 0.4
   SATURATION: 0.4
   HUE: 0.4
   MIN_SIZE_TRAIN: (240, 280, 320, 360, 400)
+  MIN_SIZE_TRAIN: (320, )
   MAX_SIZE_TRAIN: 640
   MIN_SIZE_TEST: 320
   MAX_SIZE_TEST: 640

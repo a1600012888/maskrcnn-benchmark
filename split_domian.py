@@ -21,7 +21,9 @@ Scenes = ['residential', 'highway', 'city street', 'parking lot', 'gas stations'
 TimeofDays = ['dawn/dusk', 'daytime', 'night', 'undefined']
 
 
-save_dir = '/rscratch/data/bdd100k/domain_embedding_val_new'
+save_dir = '/rscratch/data/bdd100k/domain_embedding_val_avg'
+if not os.path.exists(save_dir):
+    os.mkdir(save_dir)
 
 name2domain = {}
 
@@ -121,9 +123,9 @@ if __name__ == '__main__':
 
     run_one_epoch(net, dl_val, embedding_dic, Domains)
     # run_one_epoch(net, dl_train, embedding_dic)
-    
+
     a = 0
-    tnum = 0 
+    tnum = 0
     for i in range(len(Domains)):
         a = a + embedding_dic[i]
         dic = Domains[i]
