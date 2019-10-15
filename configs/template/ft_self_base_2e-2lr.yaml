@@ -1,5 +1,6 @@
-OUTPUT_DIR: './results/fbnet-bdd-lr2x-aug2'
+OUTPUT_DIR: './results/planb_ft_time0'
 MODEL:
+  WEIGHT: '../models/bdd_fb_aug2_lr2.model'
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
     CONV_BODY: FBNet
@@ -26,16 +27,21 @@ MODEL:
 # DATALOADER:
 #   NUM_WORKERS: 2
 DATASETS:
-  TRAIN: ("bdd100k_cocofmt_train",)
-  TEST: ("bdd100k_cocofmt_train",)
+  TRAIN: ("coco_train",) # 5027
+  #TEST: ("bdd100k_cocofmt_train",)
   #TEST: ("bdd100k_cocofmt_val",)
+  #TEST: ("bdd100k_cocofmt_train_time0",)
+  TEST: ("coco_val",)
 SOLVER:
-  BASE_LR: 0.12
+  BASE_LR: 0.02 # 0.12 * 0.1 / 2 for 4 GPUs
   WARMUP_FACTOR: 0.1
   WEIGHT_DECAY: 0.0001
-  STEPS: (60000, 80000)
-  MAX_ITER: 90000
-  IMS_PER_BATCH: 128  # for 8GPUs
+  STEPS: (1200, 1600)
+  MAX_ITER: 1800 # for nearly 75 epochs
+  WARMUP_ITERS: 200
+  #IMS_PER_BATCH: 128  # 128 for 8GPUs
+  IMS_PER_BATCH: 64  # 128 for 8GPUs
+  CHECKPOINT_PERIOD: 50
 # TEST:
 #   IMS_PER_BATCH: 8
 INPUT:

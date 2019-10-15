@@ -10,18 +10,18 @@ from tqdm import tqdm
 
 Identity = Lambda(lambda x: x)
 
-bdd_val_label_path = '/rscratch/data/bdd100k/labels/bdd100k_labels_images_val.json'
-bdd_train_label_path = '/rscratch/data/bdd100k/labels/bdd100k_labels_images_train.json'
+bdd_val_label_path = '/share/data/bdd100k/labels/bdd100k_labels_images_val.json'
+bdd_train_label_path = '/share/data/bdd100k/labels/bdd100k_labels_images_train.json'
 
-val_dir = '/rscratch/data/bdd100k/images/100k/val'
-train_dir = '/rscratch/data/bdd100k/images/100k/train'
+val_dir = '/share/data/bdd100k/images/100k/val'
+train_dir = '/share/data/bdd100k/images/100k/train'
 
 Weathers = ['clear', 'partly cloudy', 'overcast', 'rainy', 'snowy', 'foggy', 'undefined']
 Scenes = ['residential', 'highway', 'city street', 'parking lot', 'gas stations', 'tunnel', 'undefined']
 TimeofDays = ['dawn/dusk', 'daytime', 'night', 'undefined']
 
 
-save_dir = '/rscratch/data/bdd100k/domain_embedding_val_weather'
+save_dir = '/share/data/bdd100k/domain_embedding_val_weather_time'
 
 name2domain = {}
 
@@ -30,14 +30,15 @@ def get_domain_idx(attributes:dict, Domains) -> int:
 
     weather, scene, timeofday = attributes['weather'], attributes['scene'], attributes['timeofday']
 
-    w, s, t = Weathers.index(weather), Scenenights.index(scene), TimeofDays.index(timeofday)
+    w, s, t = Weathers.index(weather), Scenes.index(scene), TimeofDays.index(timeofday)
 
-    domain_idx = w
+    domain_idx = t + w * len(TimeofDays)
+
 
     # Do not access objects in multi-processing. It is forked!!!
     # print(Domains[domain_idx]['num'])
     # Domains[domain_idx]['num'] = Domains[domain_idx]['num'] + 1
-
+    print(w,s,t, domain_idx)
     return domain_idx
 
 
@@ -118,7 +119,7 @@ if __name__ == '__main__':
     dl_train = torch.utils.data.DataLoader(ds_train, batch_size=64, num_workers=8)
     dl_val = torch.utils.data.DataLoader(ds_val, batch_size=64, num_workers=8)
 
-    embedding_dic = {i:0 for i in range(len(Weathers)*len(Scenes)*len(TimeofDays))}
+    embedding_dic = {i:0 for i in range(len(Weathers)*len(TimeofDays))}
 
     run_one_epoch(net, dl_val, embedding_dic, Domains)
     # run_one_epoch(net, dl_train, embedding_dic)

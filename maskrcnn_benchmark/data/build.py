@@ -15,7 +15,8 @@ from .collate_batch import BatchCollator, BBoxAugCollator
 from .transforms import build_transforms
 
 
-def build_dataset(dataset_list, transforms, dataset_catalog, is_train=True):
+def build_dataset(dataset_list, transforms, dataset_catalog, is_train=True,
+                  self_str = ''):
     """
     Arguments:
         dataset_list (list[str]): Contains the names of the datasets, i.e.,
@@ -31,7 +32,7 @@ def build_dataset(dataset_list, transforms, dataset_catalog, is_train=True):
         )
     datasets = []
     for dataset_name in dataset_list:
-        data = dataset_catalog.get(dataset_name)
+        data = dataset_catalog.get(dataset_name, self_str)
         factory = getattr(D, data["factory"])
         args = data["args"]
         # for COCODataset, we want to remove images without annotations
@@ -153,7 +154,8 @@ def make_data_loader(cfg, is_train=True, is_distributed=False, start_iter=0):
 
     # If bbox aug is enabled in testing, simply set transforms to None and we will apply transforms later
     transforms = None if not is_train and cfg.TEST.BBOX_AUG.ENABLED else build_transforms(cfg, is_train)
-    datasets = build_dataset(dataset_list, transforms, DatasetCatalog, is_train)
+    datasets = build_dataset(dataset_list, transforms, DatasetCatalog, is_train,
+                             cfg.SELF_STR)
 
     if is_train:
         # save category_id to label name mapping

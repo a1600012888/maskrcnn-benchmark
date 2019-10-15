@@ -1,0 +1,15 @@
+ulimit -n 4096
+export NGPUS=4
+#CUDA_VISIBLE_DEVICES=0,1,2,3 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS tools/train_net.py --config-file "./configs/ft_time_0_planb.yaml"
+CUDA_VISIBLE_DEVICES=4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS --master_port=9999  tools/train_net.py --config-file "./configs/ft_time_0_planb.yaml" 
+CUDA_VISIBLE_DEVICES=4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS --master_port=9999  tools/train_net.py --config-file "./configs/ft_time_1_planb.yaml" 
+CUDA_VISIBLE_DEVICES=4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS --master_port=9999  tools/train_net.py --config-file "./configs/ft_time_1_planc.yaml" 
+CUDA_VISIBLE_DEVICES=4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS --master_port=9999  tools/train_net.py --config-file "./configs/ft_time_1_pland.yaml" 
+CUDA_VISIBLE_DEVICES=4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS --master_port=9999  tools/train_net.py --config-file "./configs/ft_time_1_plane.yaml" 
+CUDA_VISIBLE_DEVICES=4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS --master_port=9999  tools/train_net.py --config-file "./configs/ft_time_1_pland2x.yaml" 
+CUDA_VISIBLE_DEVICES=4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS --master_port=9999  tools/train_net.py --config-file "./configs/ft_time_1_plane2x.yaml" 
+CUDA_VISIBLE_DEVICES=4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS --master_port=9999  tools/train_net.py --config-file "./configs/ft_time_2_planb.yaml" 
+CUDA_VISIBLE_DEVICES=4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS --master_port=9999  tools/train_net.py --config-file "./configs/ft_time_2_planc.yaml" 
+CUDA_VISIBLE_DEVICES=4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS --master_port=9999  tools/train_net.py --config-file "./configs/ft_time_2_pland.yaml" 
+CUDA_VISIBLE_DEVICES=4,5,6,7 python3 -m torch.distributed.launch --nproc_per_node=$NGPUS --master_port=9999  tools/train_net.py --config-file "./configs/ft_time_2_plane.yaml" 
+#CUDA_VISIBLE_DEVICES=7 python -m torch.distributed.launch --nproc_per_node=$NGPUS tools/train_net.py --config-file "ty_tools/time_lr2x_lam0.2.yaml"

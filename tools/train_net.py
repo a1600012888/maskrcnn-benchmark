@@ -36,6 +36,10 @@ except ImportError:
 def train(cfg, local_rank, distributed):
     print(cfg)
     model = build_detection_model(cfg)
+    #for param in model.parameters():
+    #    param.requires_grad = False
+    #for param in model.backbone.parameters():
+    #    param.requires_grad = True
     device = torch.device(cfg.MODEL.DEVICE)
     model.to(device)
 

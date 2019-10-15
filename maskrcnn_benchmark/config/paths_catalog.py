@@ -7,6 +7,39 @@ import os
 class DatasetCatalog(object):
     DATA_DIR = "datasets"
     DATASETS = {
+        "bdd100k_cocofmt_train_time0": {
+            "img_dir": "bdd100k/data_part/time-part/images/train/0",
+            "ann_file": "bdd100k/data_part/time-part/annotations/train/0.json"
+        },
+        "bdd100k_cocofmt_val_time0": {
+            "img_dir": "bdd100k/data_part/time-part/images/val/0",
+            "ann_file": "bdd100k/data_part/time-part/annotations/val/0.json"
+        },
+        "bdd100k_cocofmt_train_time1": {
+            "img_dir": "bdd100k/data_part/time-part/images/train/1",
+            "ann_file": "bdd100k/data_part/time-part/annotations/train/1.json"
+        },
+        "bdd100k_cocofmt_val_time1": {
+            "img_dir": "bdd100k/data_part/time-part/images/val/1",
+            "ann_file": "bdd100k/data_part/time-part/annotations/val/1.json"
+        },
+        "bdd100k_cocofmt_train_time2": {
+            "img_dir": "bdd100k/data_part/time-part/images/train/2",
+            "ann_file": "bdd100k/data_part/time-part/annotations/train/2.json"
+        },
+        "bdd100k_cocofmt_val_time2": {
+            "img_dir": "bdd100k/data_part/time-part/images/val/2",
+            "ann_file": "bdd100k/data_part/time-part/annotations/val/2.json"
+        },
+        "bdd100k_cocofmt_train_time3": {
+            "img_dir": "bdd100k/data_part/time-part/images/train/3",
+            "ann_file": "bdd100k/data_part/time-part/annotations/train/3.json"
+        },
+        "bdd100k_cocofmt_val_time3": {
+            "img_dir": "bdd100k/data_part/time-part/images/val/3",
+            "ann_file": "bdd100k/data_part/time-part/annotations/val/3.json"
+        },
+
         "embed_jitter_domain_bdd100k_cocofmt_train": {
             "img_dir": "bdd100k/train",
             "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json",
@@ -37,6 +70,19 @@ class DatasetCatalog(object):
             "img_dir": "bdd100k/val",
             "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_val.json",
             'embedding_dir': 'bdd100k/domain_embedding_val_single',
+        },
+        "domain_idx_bdd100k_cocofmt_train": {
+            "img_dir": "bdd100k/train",
+            "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json",
+            'embedding_dir': 'bdd100k/domain_idx_embedding',
+        },
+        "domain_idx_bdd100k_cocofmt_val": {
+            # "img_dir": "bdd100k/train",
+            # "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_train.json",
+            # 'embedding_dir': 'bdd100k/domain_embedding',
+            "img_dir": "bdd100k/val",
+            "ann_file": "bdd100k/annotations/bdd100k_labels_images_det_coco_val.json",
+            'embedding_dir': 'bdd100k/domain_idx_embedding_val',
         },
         "domain_bdd100k_cocofmt_train": {
             "img_dir": "bdd100k/train",
@@ -161,15 +207,33 @@ class DatasetCatalog(object):
     }
 
     @staticmethod
-    def get(name):
+    def get(name, self_str = ''):
 
         if "coco" in name:
             data_dir = DatasetCatalog.DATA_DIR
-            attrs = DatasetCatalog.DATASETS[name]
-            args = dict(
-                root=os.path.join(data_dir, attrs["img_dir"]),
-                ann_file=os.path.join(data_dir, attrs["ann_file"]),
-            )
+            if self_str is not '':
+                _, dir_name, number = self_str.split("_")
+                is_val = name.split('_')[-1]
+                img_dir = os.path.join(data_dir,
+                                       'bdd100k/data_part',
+                                       dir_name, "images",
+                                       is_val, '{}'.format(number))
+                ann_file = os.path.join(data_dir,
+                                       'bdd100k/data_part',
+                                       dir_name, "annotations",
+                                       is_val,
+                                        '{}.json'.format(number))
+                args = dict(
+                    root=img_dir,
+                    ann_file=ann_file,
+                )
+
+            else:
+                attrs = DatasetCatalog.DATASETS[name]
+                args = dict(
+                    root=os.path.join(data_dir, attrs["img_dir"]),
+                    ann_file=os.path.join(data_dir, attrs["ann_file"]),
+                )
             if 'domain' in name:
                 args['embedding_dir'] = os.path.join(data_dir, attrs['embedding_dir'])
 
@@ -179,6 +243,11 @@ class DatasetCatalog(object):
                     return dict(
                         factory="EmbedJitterDomainDataset",
                         args=args,
+                    )
+                if 'idx' in name:
+                    return dict(
+                        factory='DomainIdxDataset',
+                        args=args
                     )
 
                 return dict(

@@ -27,6 +27,10 @@ class GeneralizedRCNN(nn.Module):
         super(GeneralizedRCNN, self).__init__()
 
         self.backbone = build_backbone(cfg)
+        # fix backbone:
+        #for param in self.backbone.parameters():
+        #    param.requires_grad = False
+
         self.DOMAIN_SCC = cfg.MODEL.BACKBONE.DOMAIN_SCC
         self.SCC_DIVERSE_REG = cfg.MODEL.BACKBONE.SCC_DIVERSE_REG
 
