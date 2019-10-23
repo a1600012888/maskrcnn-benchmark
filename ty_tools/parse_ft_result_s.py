@@ -2,15 +2,11 @@ import os
 import json
 
 
-train_img_dir = '../datasets/bdd100k/data_part/time-weather-part/images/train'
+train_img_dir = '../datasets/bdd100k/data_part/time-weather-scene-part/images/train'
 dirs = [
-        "../results/ft_base/time-weather-part/bn_post",
-        "../results/ft_base/time-weather-part/baseline",
-        "../results/ft_base/time-weather-part/fix_backbone",
-        "../results/ft_base/time-weather-part/fix_bn",
-        "../results/ft_base/time-weather-part/base_test",
-        "../results/ft_base/time-weather-part/simple",
-        "../results/ft_base/time-weather-part/9ep_2e-3lr",
+        "../results/ft_base/time-weather-scene-part/bn_post",
+        "../results/ft_base/time-weather-scene-part/base_test",
+        "../results/ft_base/time-weather-scene-part/simple",
         #"/home/tyzhang/projects/maskrcnn-benchmark/results/ft_base/time-weather-part/2e-3lr",
         ]
 
@@ -38,6 +34,8 @@ for name in all_names:
 
     for dir_path, d_n in zip(dirs, dir_name):
         log_path = os.path.join(dir_path, name, 'log.txt')
+        if not os.path.exists(log_path):
+            continue
 
         p_str = parse_one_file(log_path)
 

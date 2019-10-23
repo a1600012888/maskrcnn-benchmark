@@ -1,6 +1,6 @@
 OUTPUT_DIR: './results/model_pool_test/time-weather-part'
 MODEL:
-  WEIGHT: '../models/bdd_fb_aug2_lr2.model'
+  WEIGHT: '../models/bdd_fb_aug1_lr2.model'
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
     CONV_BODY: FBNet

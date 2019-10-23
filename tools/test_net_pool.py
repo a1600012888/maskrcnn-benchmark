@@ -90,6 +90,7 @@ def main():
 
     for key, val in id2model_path.items():
         id2model[key] = model_path_2_model[val]
+        #print(id2model[key])
 
 
     iou_types = ("bbox",)

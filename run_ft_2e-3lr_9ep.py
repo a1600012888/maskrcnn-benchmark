@@ -12,7 +12,12 @@ base_cmd = "python3 -m torch.distributed.launch --nproc_per_node={} --master_por
 img_dir = os.path.join("./datasets/bdd100k/data_part",
                        part_name, "images/train")
 
+val_img_dir = os.path.join("./datasets/bdd100k/data_part",
+                       part_name, "images/val")
+
 all_names = os.listdir(img_dir)
+val_names = os.listdir(val_img_dir)
+all_names = set(all_names).intersection(set(val_names))
 img_numbers = []
 for name in all_names:
     target_dir = os.path.join(img_dir, name)

@@ -10,18 +10,18 @@ from tqdm import tqdm
 
 Identity = Lambda(lambda x: x)
 
-bdd_val_label_path = '/rscratch/data/bdd100k/labels/bdd100k_labels_images_val.json'
-bdd_train_label_path = '/rscratch/data/bdd100k/labels/bdd100k_labels_images_train.json'
+bdd_val_label_path = '/data/zhangtianyuan/bdd100k/labels/bdd100k_labels_images_val.json'
+bdd_train_label_path = '/data/zhangtianyuan/bdd100k/labels/bdd100k_labels_images_train.json'
 
-val_dir = '/rscratch/data/bdd100k/images/100k/val'
-train_dir = '/rscratch/data/bdd100k/images/100k/train'
+val_dir = '/data/zhangtianyuan/bdd100k/images/100k/val'
+train_dir = '/data/zhangtianyuan/bdd100k/images/100k/train'
 
 Weathers = ['clear', 'partly cloudy', 'overcast', 'rainy', 'snowy', 'foggy', 'undefined']
 Scenes = ['residential', 'highway', 'city street', 'parking lot', 'gas stations', 'tunnel', 'undefined']
 TimeofDays = ['dawn/dusk', 'daytime', 'night', 'undefined']
 
 
-save_dir = '/rscratch/data/bdd100k/domain_embedding_train_single'
+save_dir = '/data/zhangtianyuan/bdd100k/domain_embedding_val_single'
 
 if not os.path.exists(save_dir):
     os.mkdir(save_dir)
@@ -123,9 +123,10 @@ if __name__ == '__main__':
 
     embedding_dic = {i:0 for i in range(70001)}
 
-    run_one_epoch(net, dl_train, embedding_dic, Domains)
+    run_one_epoch(net, dl_val, embedding_dic, Domains)
+    #run_one_epoch(net, dl_train, embedding_dic, Domains)
     # run_one_epoch(net, dl_train, embedding_dic)
-    
+
 
     for i in range(len(Domains)):
         dic = Domains[i]

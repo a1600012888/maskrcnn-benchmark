@@ -1,13 +1,13 @@
 import os
 
 part_name = "time-weather-part"
-NGPUS = 4
+NGPUS = 1
 batch_size = 16 * NGPUS
-num_epoch = 18
-stpes = [12, 16]
+num_epoch = 1
+stpes = [0,1]
 
 base_cmd = "python3 -m torch.distributed.launch --nproc_per_node={} --master_port=9999 tools/train_net.py".format(NGPUS) +\
-           " --config-file './configs/template/ft_self_base.yaml' "
+           " --config-file './configs/template/bn_post.yaml' "
 
 img_dir = os.path.join("./datasets/bdd100k/data_part",
                        part_name, "images/train")
@@ -30,7 +30,7 @@ for name, num in zip(all_names, img_numbers):
         continue
     self_str = "self_" + part_name + "_" + name
 
-    iters_per_epoch = num // batch_size + 1
+    iters_per_epoch = num // batch_size + 10
 
     solver_steps = [ep * iters_per_epoch for ep in stpes]
     solver_max_iter = num_epoch * iters_per_epoch
@@ -41,7 +41,7 @@ for name, num in zip(all_names, img_numbers):
         solver_warmup_iters = 100
 
     solver_checkpoint_period = solver_max_iter // 5 + 1
-    output_dir = "./results/ft_base/{}/baseline/{}".format(part_name, name)
+    output_dir = "./results/ft_base/{}/bn_post/{}".format(part_name, name)
 
 
     arg_str = " SELF_STR '{}' ".format(self_str) + \

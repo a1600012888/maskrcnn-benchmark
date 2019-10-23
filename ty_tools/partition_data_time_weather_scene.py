@@ -1,8 +1,8 @@
 import os
 import json
 
-source_dir = '/data/zhangtianyuan/bdd100k/images/100k/val'
-target_dir = '/data/zhangtianyuan/bdd100k/images/100k/time-weather-part/val'
+source_dir = '/data/zhangtianyuan/bdd100k/images/100k/train'
+target_dir = '/data/zhangtianyuan/bdd100k/images/100k/time-weather-scene-part/train'
 
 
 Weathers = ['clear', 'partly cloudy', 'overcast', 'rainy', 'snowy', 'foggy', 'undefined']
@@ -10,10 +10,10 @@ Scenes = ['residential', 'highway', 'city street', 'parking lot', 'gas stations'
 TimeofDays = ['dawn/dusk', 'daytime', 'night', 'undefined']
 
 
-json_path = "/data/zhangtianyuan/bdd100k/labels/bdd100k_labels_images_val.json"
-coco_json_path = "/data/zhangtianyuan/bdd100k/labels_cocoformat/bdd100k_labels_images_det_coco_val.json"
+json_path = "/data/zhangtianyuan/bdd100k/labels/bdd100k_labels_images_train.json"
+coco_json_path = "/data/zhangtianyuan/bdd100k/labels_cocoformat/bdd100k_labels_images_det_coco_train.json"
 
-target_coco_json_dir = "/data/zhangtianyuan/bdd100k/labels_cocoformat/time-weather-part/val"
+target_coco_json_dir = "/data/zhangtianyuan/bdd100k/labels_cocoformat/time-weather-scene-part/train"
 
 def get_domain_idx(attributes):
     weather, scene, timeofday = attributes['weather'], attributes['scene'], attributes['timeofday']
@@ -21,7 +21,8 @@ def get_domain_idx(attributes):
     w, s, t = Weathers.index(weather), Scenes.index(scene), TimeofDays.index(timeofday)
 
     #idx = t + w * len(timeofday)
-    idx = t + w * len(TimeofDays)
+    #idx = t + w * len(TimeofDays)
+    idx = w * len(Scenes) * len(TimeofDays) + s * len(TimeofDays) + t
     print(idx)
     return idx
 
@@ -54,7 +55,7 @@ if __name__ == "__main__":
 
 
     new_coco_dics = []
-    for i in range(4*7+1):
+    for i in range(196+1):
         new_coco_dics.append({"categories":coco_dic["categories"],
                               "type":coco_dic["type"],
                               "images":[],

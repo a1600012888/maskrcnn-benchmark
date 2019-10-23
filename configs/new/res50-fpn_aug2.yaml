@@ -1,0 +1,66 @@
+OUTPUT_DIR: './results/new/res50-fpn-gn-3x'
+MODEL:
+  META_ARCHITECTURE: "GeneralizedRCNN"
+
+  WEIGHT: "" # no pretrained model
+  BACKBONE:
+    CONV_BODY: "R-50-FPN"
+    FREEZE_CONV_BODY_AT: 0 # finetune all layers
+  RESNETS: # use GN for backbone
+    BACKBONE_OUT_CHANNELS: 256
+    STRIDE_IN_1X1: False
+    TRANS_FUNC: "BottleneckWithGN"
+    STEM_FUNC: "StemWithGN"
+  FPN:
+    USE_GN: True # use GN for FPN
+  RPN:
+    USE_FPN: True
+    ANCHOR_STRIDE: (4, 8, 16, 32, 64)
+    PRE_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 1000
+    POST_NMS_TOP_N_TEST: 1000
+    FPN_POST_NMS_TOP_N_TEST: 1000
+  ROI_HEADS:
+    USE_FPN: True
+    BATCH_SIZE_PER_IMAGE: 512
+    POSITIVE_FRACTION: 0.25
+  ROI_BOX_HEAD:
+    USE_GN: True # use GN for bbox head
+    POOLER_RESOLUTION: 7
+    POOLER_SCALES: (0.25, 0.125, 0.0625, 0.03125)
+    POOLER_SAMPLING_RATIO: 2
+    FEATURE_EXTRACTOR: "FPN2MLPFeatureExtractor"
+    PREDICTOR: "FPNPredictor"
+
+
+# DATALOADER:
+#   NUM_WORKERS: 2
+DATASETS:
+  TRAIN: ("bdd100k_cocofmt_train",)
+  #TEST: ("bdd100k_cocofmt_train",)
+  TEST: ("bdd100k_cocofmt_val",)
+  #TEST: ("bdd100k_cocofmt_train_time1",)
+DATALOADER:
+  SIZE_DIVISIBILITY: 32
+SOLVER:
+  # Assume 8 gpus
+  BASE_LR: 0.02
+  WEIGHT_DECAY: 0.0001
+  STEPS: (210000, 250000)
+  MAX_ITER: 270000
+  IMS_PER_BATCH: 16
+TEST:
+  IMS_PER_BATCH: 8
+# TEST:
+#   IMS_PER_BATCH: 8
+INPUT:
+  BRIGHTNESS: 0.4 
+  CONTRAST: 0.4
+  SATURATION: 0.4
+  HUE: 0.4
+  MIN_SIZE_TRAIN: (800,)
+  MAX_SIZE_TRAIN: 1333
+  MIN_SIZE_TEST: 800
+  MAX_SIZE_TEST: 1333
+  PIXEL_MEAN: [103.53, 116.28, 123.675]
+  PIXEL_STD: [57.375, 57.12, 58.395]

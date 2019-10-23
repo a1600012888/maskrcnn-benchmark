@@ -1,6 +1,5 @@
-OUTPUT_DIR: './results/planb_ft_time0'
+OUTPUT_DIR: './results/new/baseline_aug3'
 MODEL:
-  WEIGHT: '../models/bdd_fb_aug1_lr2.model'
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
     CONV_BODY: FBNet
@@ -27,28 +26,24 @@ MODEL:
 # DATALOADER:
 #   NUM_WORKERS: 2
 DATASETS:
-  TRAIN: ("coco_train",) # 5027
+  TRAIN: ("bdd100k_cocofmt_train",)
   #TEST: ("bdd100k_cocofmt_train",)
-  #TEST: ("bdd100k_cocofmt_val",)
-  #TEST: ("bdd100k_cocofmt_train_time0",)
-  TEST: ("coco_val",)
+  TEST: ("bdd100k_cocofmt_val",)
+  #TEST: ("bdd100k_cocofmt_train_time1",)
 SOLVER:
-  BASE_LR: 0.006 # 0.12 * 0.1 / 2 for 4 GPUs
+  BASE_LR: 0.12
   WARMUP_FACTOR: 0.1
   WEIGHT_DECAY: 0.0001
-  STEPS: (1200, 1600)
-  MAX_ITER: 1800 # for nearly 75 epochs
-  WARMUP_ITERS: 200
-  #IMS_PER_BATCH: 128  # 128 for 8GPUs
-  IMS_PER_BATCH: 64  # 128 for 8GPUs
-  CHECKPOINT_PERIOD: 50
+  STEPS: (60000, 80000)
+  MAX_ITER: 90000
+  IMS_PER_BATCH: 128  # for 8GPUs
 # TEST:
 #   IMS_PER_BATCH: 8
 INPUT:
   BRIGHTNESS: 0.4 
-  CONTRAST: 0.4
-  SATURATION: 0.4
-  HUE: 0.4
+  CONTRAST: 0.2
+  SATURATION: 0.2
+  HUE: 0.2
   MIN_SIZE_TRAIN: (240, 280, 320, 360, 400)
   MAX_SIZE_TRAIN: 640
   MIN_SIZE_TEST: 320

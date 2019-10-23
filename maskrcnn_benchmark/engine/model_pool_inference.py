@@ -16,7 +16,7 @@ from .bbox_aug import im_detect_bbox_aug
 
 
 def compute_on_dataset(model_pool:dict, data_loader, device, timer=None):
-    for model in model_pool:
+    for key, model in model_pool.items():
         model.eval()
 
     results_dict = {}
@@ -25,6 +25,8 @@ def compute_on_dataset(model_pool:dict, data_loader, device, timer=None):
         #print(_, batch)
         images, targets, image_ids, domain_idx = batch # batch size should be 1
 
+        #print(domain_idx)
+        domain_idx = domain_idx[0]
         domain_idx = int(domain_idx.cpu().item())
 
         model = model_pool[domain_idx]

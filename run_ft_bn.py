@@ -6,7 +6,7 @@ batch_size = 16 * NGPUS
 num_epoch = 18
 stpes = [12, 16]
 
-base_cmd = "python3 -m torch.distributed.launch --nproc_per_node={} --master_port=9999 tools/train_net.py".format(NGPUS) +\
+base_cmd = "python3 -m torch.distributed.launch --nproc_per_node={} --master_port=9999 tools/train_net_bn.py".format(NGPUS) +\
            " --config-file './configs/template/ft_self_base.yaml' "
 
 img_dir = os.path.join("./datasets/bdd100k/data_part",
@@ -41,7 +41,7 @@ for name, num in zip(all_names, img_numbers):
         solver_warmup_iters = 100
 
     solver_checkpoint_period = solver_max_iter // 5 + 1
-    output_dir = "./results/ft_base/{}/baseline/{}".format(part_name, name)
+    output_dir = "./results/ft_base/{}/ft_bn/{}".format(part_name, name)
 
 
     arg_str = " SELF_STR '{}' ".format(self_str) + \

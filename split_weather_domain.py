@@ -10,18 +10,20 @@ from tqdm import tqdm
 
 Identity = Lambda(lambda x: x)
 
-bdd_val_label_path = '/share/data/bdd100k/labels/bdd100k_labels_images_val.json'
-bdd_train_label_path = '/share/data/bdd100k/labels/bdd100k_labels_images_train.json'
+bdd_val_label_path = '/home/zhangtianyuan/zhangtianyuan/bdd100k/labels/bdd100k_labels_images_val.json'
+bdd_train_label_path = '/home/zhangtianyuan/zhangtianyuan/bdd100k/labels/bdd100k_labels_images_train.json'
 
-val_dir = '/share/data/bdd100k/images/100k/val'
-train_dir = '/share/data/bdd100k/images/100k/train'
+val_dir = '/home/zhangtianyuan/zhangtianyuan/bdd100k/images/100k/val'
+train_dir = '/home/zhangtianyuan/zhangtianyuan/bdd100k/images/100k/train'
 
 Weathers = ['clear', 'partly cloudy', 'overcast', 'rainy', 'snowy', 'foggy', 'undefined']
 Scenes = ['residential', 'highway', 'city street', 'parking lot', 'gas stations', 'tunnel', 'undefined']
 TimeofDays = ['dawn/dusk', 'daytime', 'night', 'undefined']
 
 
-save_dir = '/share/data/bdd100k/domain_embedding_val_weather_time'
+save_dir = '/home/zhangtianyuan/zhangtianyuan/bdd100k/domain_embedding_val_weather_time_scene'
+if not os.path.exists(save_dir):
+    os.mkdir(save_dir)
 
 name2domain = {}
 
@@ -32,8 +34,8 @@ def get_domain_idx(attributes:dict, Domains) -> int:
 
     w, s, t = Weathers.index(weather), Scenes.index(scene), TimeofDays.index(timeofday)
 
-    domain_idx = t + w * len(TimeofDays)
-
+    #domain_idx = t + w * len(TimeofDays)
+    domain_idx = w * len(Scenes) * len(TimeofDays) + s * len(TimeofDays) + t
 
     # Do not access objects in multi-processing. It is forked!!!
     # print(Domains[domain_idx]['num'])
@@ -119,11 +121,12 @@ if __name__ == '__main__':
     dl_train = torch.utils.data.DataLoader(ds_train, batch_size=64, num_workers=8)
     dl_val = torch.utils.data.DataLoader(ds_val, batch_size=64, num_workers=8)
 
-    embedding_dic = {i:0 for i in range(len(Weathers)*len(TimeofDays))}
+    embedding_dic = {i:0 for i in range(len(Weathers)*len(TimeofDays)*len(Scenes))}
 
+    #run_one_epoch(net, dl_train, embedding_dic, Domains)
     run_one_epoch(net, dl_val, embedding_dic, Domains)
     # run_one_epoch(net, dl_train, embedding_dic)
-    
+
     # a = 0
     # for i in range(len(Domains)):
     #     a = a + embedding_dic[i]

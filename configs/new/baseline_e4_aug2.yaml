@@ -1,9 +1,10 @@
-OUTPUT_DIR: './results/planb_ft_time0'
+OUTPUT_DIR: './results/new/4e_weather_time_aug2'
 MODEL:
-  WEIGHT: '../models/bdd_fb_aug1_lr2.model'
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
     CONV_BODY: FBNet
+    DOMAIN_SCC: True
+    NUM_EXPERTS: 4
   FBNET:
     ARCH: "default"
     BN_TYPE: "bn"
@@ -18,7 +19,8 @@ MODEL:
     PRE_NMS_TOP_N_TEST: 6000
     POST_NMS_TOP_N_TRAIN: 2000
     POST_NMS_TOP_N_TEST: 100
-    
+    RPN_HEAD: FBNet.rpn_head
+  ROI_HEADS:
     BATCH_SIZE_PER_IMAGE: 512
   ROI_BOX_HEAD:
     POOLER_RESOLUTION: 6
@@ -27,25 +29,21 @@ MODEL:
 # DATALOADER:
 #   NUM_WORKERS: 2
 DATASETS:
-  TRAIN: ("coco_train",) # 5027
-  #TEST: ("bdd100k_cocofmt_train",)
-  #TEST: ("bdd100k_cocofmt_val",)
-  #TEST: ("bdd100k_cocofmt_train_time0",)
-  TEST: ("coco_val",)
+  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  #TEST: ("domain_bdd100k_cocofmt_train",)
+  TEST: ("domain_bdd100k_cocofmt_val",)
 SOLVER:
-  BASE_LR: 0.006 # 0.12 * 0.1 / 2 for 4 GPUs
+  BASE_LR: 0.12
+  #BASE_LR: 0.06
   WARMUP_FACTOR: 0.1
   WEIGHT_DECAY: 0.0001
-  STEPS: (1200, 1600)
-  MAX_ITER: 1800 # for nearly 75 epochs
-  WARMUP_ITERS: 200
-  #IMS_PER_BATCH: 128  # 128 for 8GPUs
-  IMS_PER_BATCH: 64  # 128 for 8GPUs
-  CHECKPOINT_PERIOD: 50
-# TEST:
-#   IMS_PER_BATCH: 8
+  STEPS: (60000, 80000)
+  MAX_ITER: 90000
+  IMS_PER_BATCH: 128  # 128  # for 8GPUs
+TEST:
+  IMS_PER_BATCH: 16
 INPUT:
-  BRIGHTNESS: 0.4 
+  BRIGHTNESS: 0.4
   CONTRAST: 0.4
   SATURATION: 0.4
   HUE: 0.4
