@@ -1,4 +1,4 @@
-OUTPUT_DIR: './results/new/2e_time_aug1'
+OUTPUT_DIR: './results/new/2e_weather_time_aug1'
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
@@ -31,7 +31,7 @@ MODEL:
 DATASETS:
   TRAIN: ("domain_bdd100k_cocofmt_train",)
   #TEST: ("domain_bdd100k_cocofmt_train",)
-  TEST: ("domain_bdd100k_cocofmt_val",)
+  TEST: ("domain_bdd100k_cocofmt_val_new",)
 SOLVER:
   BASE_LR: 0.12
   #BASE_LR: 0.06

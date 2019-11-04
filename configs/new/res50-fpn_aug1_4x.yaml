@@ -1,8 +1,8 @@
-OUTPUT_DIR: './results/new/res50-fpn-gn-3x'
+OUTPUT_DIR: './results/new/res50-fpn-gn-3x_aug1_4x'
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
 
-  WEIGHT: "" # no pretrained model
+  WEIGHT: "../models/res50-fpn-gn-3x_aug1.model" # no pretrained model
   BACKBONE:
     CONV_BODY: "R-50-FPN"
     FREEZE_CONV_BODY_AT: 0 # finetune all layers
@@ -46,19 +46,19 @@ SOLVER:
   # Assume 8 gpus
   BASE_LR: 0.02
   WEIGHT_DECAY: 0.0001
-  STEPS: (210000, 250000)
-  MAX_ITER: 270000
+  STEPS: (60000, 80000)
+  MAX_ITER: 90000
   IMS_PER_BATCH: 16
 TEST:
   IMS_PER_BATCH: 8
 # TEST:
 #   IMS_PER_BATCH: 8
 INPUT:
-  BRIGHTNESS: 0.4 
-  CONTRAST: 0.4
-  SATURATION: 0.4
-  HUE: 0.4
-  MIN_SIZE_TRAIN: (600, 700, 800, 900)
+  BRIGHTNESS: 0.1
+  CONTRAST: 0.1
+  SATURATION: 0.1
+  HUE: 0.1
+  MIN_SIZE_TRAIN: (800,)
   MAX_SIZE_TRAIN: 1333
   MIN_SIZE_TEST: 800
   MAX_SIZE_TEST: 1333

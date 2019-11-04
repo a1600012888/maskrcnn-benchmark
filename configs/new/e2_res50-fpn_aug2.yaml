@@ -1,10 +1,12 @@
-OUTPUT_DIR: './results/new/res50-fpn-gn-3x'
+OUTPUT_DIR: './results/new/e2_res50-fpn-gn-3x_aug2'
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
 
   WEIGHT: "" # no pretrained model
   BACKBONE:
     CONV_BODY: "R-50-FPN"
+    DOMAIN_SCC: True
+    NUM_EXPERTS: 2
     FREEZE_CONV_BODY_AT: 0 # finetune all layers
   RESNETS: # use GN for backbone
     BACKBONE_OUT_CHANNELS: 256
@@ -36,10 +38,9 @@ MODEL:
 # DATALOADER:
 #   NUM_WORKERS: 2
 DATASETS:
-  TRAIN: ("bdd100k_cocofmt_train",)
-  #TEST: ("bdd100k_cocofmt_train",)
-  TEST: ("bdd100k_cocofmt_val",)
-  #TEST: ("bdd100k_cocofmt_train_time1",)
+  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  #TEST: ("domain_bdd100k_cocofmt_train",)
+  TEST: ("domain_bdd100k_cocofmt_val",)
 DATALOADER:
   SIZE_DIVISIBILITY: 32
 SOLVER:
@@ -54,11 +55,11 @@ TEST:
 # TEST:
 #   IMS_PER_BATCH: 8
 INPUT:
-  BRIGHTNESS: 0.4 
+  BRIGHTNESS: 0.4
   CONTRAST: 0.4
   SATURATION: 0.4
   HUE: 0.4
-  MIN_SIZE_TRAIN: (600, 700, 800, 900)
+  MIN_SIZE_TRAIN: (600, 700, 800,900)
   MAX_SIZE_TRAIN: 1333
   MIN_SIZE_TEST: 800
   MAX_SIZE_TEST: 1333

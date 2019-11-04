@@ -1,4 +1,4 @@
-OUTPUT_DIR: './results/new/2e_time_aug1'
+OUTPUT_DIR: './results/new/2e_scater_k10_aug1'
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
   BACKBONE:
@@ -29,9 +29,9 @@ MODEL:
 # DATALOADER:
 #   NUM_WORKERS: 2
 DATASETS:
-  TRAIN: ("domain_bdd100k_cocofmt_train",)
+  TRAIN: ("domain_cluster_bdd100k_cocofmt_train",)
   #TEST: ("domain_bdd100k_cocofmt_train",)
-  TEST: ("domain_bdd100k_cocofmt_val",)
+  TEST: ("domain_cluster_bdd100k_cocofmt_val",)
 SOLVER:
   BASE_LR: 0.12
   #BASE_LR: 0.06
